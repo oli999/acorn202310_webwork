@@ -25,6 +25,39 @@ public class MemberDao {
 		return dao;
 	}
 	
+	//회원 한명의 정보를 삭제하고 작업의 성공 여부를 리턴해주는 메소드
+	public boolean delete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "DELETE FROM member"
+					+ " WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩 할 내용이 있으면 바인딩
+			pstmt.setInt(1, num);
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	//회원 한명의 정보를 저장하고 작업의 성공 여부를 리턴해주는 메소드
 	public boolean insert(MemberDto dto) {
 		Connection conn=null;
