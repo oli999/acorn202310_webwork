@@ -5,11 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>/fetch/form_validation4.jsp</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container">
+	<div class="container animate__animated animate__bounceInLeft">
 		<h1>폼 유효성 검증 style 테스트</h1>
 		<form action="signup.jsp" method="post">
 			<div>
@@ -30,7 +31,7 @@
 			</div>
 			<div>
 				<label class="form-label" for="comment">하고 싶은 말</label>
-				<textarea class="form-control" name="comment" id="comment" rows="10"></textarea>
+				<textarea class="form-control animate__animated animate__faster" name="comment" id="comment" rows="5"></textarea>
 				<div class="form-text">100 글자 이내로 입력해 주세요</div>
 				<div class="form-text">글자 수 : <strong id="textCount">0</strong> </div>
 			</div>
@@ -140,6 +141,13 @@
 			if(length > 100){
 				e.target.classList.add("is-invalid");
 				isCommentValid=false;
+				//애니매이션 효과를 주기 위해
+				e.target.classList.add("animate__shakeX");
+				// "animationend" 이벤트가 일어 났을때 "animate__shakeX" 클래스를 제거 해보세요
+				e.target.addEventListener("animationend", (e)=>{
+					//클래스 제거 하기 
+					e.target.classList.remove("animate__shakeX");
+				}, {once:true});
 			}else{
 				e.target.classList.remove("is-invalid");
 				isCommentValid=true;
@@ -148,6 +156,8 @@
 			document.querySelector("#textCount").innerText=length;
 			checkForm();
 		});
+		
+		
 	</script>
 </body>
 </html>
