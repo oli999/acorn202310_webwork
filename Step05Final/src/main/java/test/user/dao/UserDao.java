@@ -2,6 +2,7 @@ package test.user.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import test.user.dto.UserDto;
 import test.util.DbcpBean;
@@ -21,6 +22,52 @@ public class UserDao {
 		}
 		return dao;
 	}
+	//아이디를 이용해서 회원 한명의 정보를 저장하는 메소드
+	public UserDto getData(String id) {
+		
+		UserDto dto=null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "SELECT pwd, email, profile, regdate"
+					+ " FROM user_info"
+					+ " WHERE id=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 여기서 한다.
+			pstmt.setString(1, id);
+			//query 문 수행하고 결과(ResultSet) 얻어내기
+			rs = pstmt.executeQuery();
+			//만일 select 된 row 가 있다면  
+			if (rs.next()) {
+				dto=new UserDto();
+				dto.setId(id);
+				dto.setPwd(rs.getString("pwd"));
+				dto.setEmail(rs.getString("email"));
+				dto.setProfile(rs.getString("profile"));
+				dto.setRegdate(rs.getString("regdate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close(); //Connection 객체의 close() 메소드를 호출하면 Pool 에 반납된다.
+			} catch (Exception e) {
+			}
+		}
+		
+		return dto; // null 이 리턴될수도 있다. (존재하지 않는 id 라면)
+	}
+	
+	
 	//회원정보를 DB 에 저장하고 성공여부를 리턴하는 메소드 
 	public boolean insert(UserDto dto) {
 		Connection conn = null;
