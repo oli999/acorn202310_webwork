@@ -12,15 +12,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/user/info.jsp</title>
+<title>/user/protected/info.jsp</title>
 </head>
 <body>
 	<div class="container">
+		<a href="updateform.jsp">개인 정보 수정</a>
 		<h1>가입 정보 입니다</h1>
 		<table>
 			<tr>
 				<th>아이디</th>
 				<td><%=id %></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<a href="pwd_updateform.jsp">수정하기</a>
+				</td>
 			</tr>
 			<tr>
 				<th>프로필 이미지</th>
