@@ -24,11 +24,11 @@
 	// title 이라는 파라미터명으로 전달되는 파일의 제목(설명) 얻어내기
 	String title=mr.getParameter("title");
 	// 업로드된 파일의 원본 파일명
-	String orgFileName=mr.getOriginalFileName("myFile");
+	String orgFileName=mr.getOriginalFileName("myImage");
 	// 업로드된 파일이 저장된 파일명(원본 파일명이랑 다를수 있다)
-	String saveFileName=mr.getFilesystemName("myFile");
+	String saveFileName=mr.getFilesystemName("myImage");
 	// 업로드된 파일의 크기( 다운로드 해줄때 필요하다 )
-	long fileSize=mr.getFile("myFile").length();
+	long fileSize=mr.getFile("myImage").length();
 %>        
 <!DOCTYPE html>
 <html>
@@ -44,6 +44,8 @@
 		파일의 크기 : <strong><%=fileSize %></strong> byte <br />
 		파일이 저장된 실제 경로 : <strong><%=realPath %></strong> <br />
 		<a href="${pageContext.request.contextPath}/test/download?orgFileName=<%=orgFileName%>&saveFileName=<%=saveFileName%>&fileSize=<%=fileSize%>">다운로드</a>
+		<br />
+		<img width="300" src="${pageContext.request.contextPath}/upload/<%=saveFileName%>"/>
 	</p>
 </body>
 </html>
