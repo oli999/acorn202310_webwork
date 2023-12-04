@@ -25,10 +25,18 @@
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/user/signup_form.jsp">회원가입</a></li>
 			<li><a href="${pageContext.request.contextPath}/user/protected/info.jsp">개인정보</a></li>
+			<li><a href="${pageContext.request.contextPath}/shop/buy.jsp?code=1&amount=3">1번상품 3개 구입하기</a></li>
 		</ul>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 

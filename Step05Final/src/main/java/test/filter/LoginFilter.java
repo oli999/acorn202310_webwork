@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter("/user/protected/*")
+@WebFilter({"/user/protected/*", "/shop/*"})
 public class LoginFilter implements Filter{
 
 	@Override
