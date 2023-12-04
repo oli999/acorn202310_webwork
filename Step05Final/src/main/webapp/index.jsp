@@ -28,6 +28,7 @@
 			<li><a href="${pageContext.request.contextPath}/shop/buy.jsp?code=1&amount=3">1번상품 3개 구입하기</a></li>
 			<li><a href="test/upload_form.jsp">파일 업로드 테스트</a></li>
 			<li><a href="test/upload_form2.jsp">이미지 업로드 테스트</a></li>
+			<li><a href="test/upload_form3.jsp">이미지 업로드 테스트(fetch 를 활용)</a></li>
 		</ul>
 	</div>
 </body>
