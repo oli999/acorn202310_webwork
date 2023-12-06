@@ -19,3 +19,35 @@ CREATE TABLE board_file(
 );
 
 CREATE SEQUENCE board_file_seq; 
+
+-- 페이징 처리를 하기 위해서는 1. 정렬  2. 행번호 부여 3. 원하는 행만 select 
+
+SELECT *
+FROM
+	(SELECT result1.*, ROWNUM AS rnum
+	FROM
+		(SELECT num, writer, title, orgFileName, fileSize, regdate 
+		FROM board_file
+		ORDER BY num DESC) result1)
+WHERE rnum BETWEEN 6 AND 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

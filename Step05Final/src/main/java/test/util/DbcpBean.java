@@ -25,7 +25,7 @@ public class DbcpBean {
 			//얻어온 datasource 객체를 이용해서 Connection 객체의 참조값을 얻어와서 필드에 저장
 			conn = ds.getConnection();
 			//예외가 발생하지 않고 여기까지 실행의 흐름이 넘어온다면 성공
-			System.out.println("Connection 얻어오기 성공!");
+			//System.out.println("Connection 얻어오기 성공!");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
