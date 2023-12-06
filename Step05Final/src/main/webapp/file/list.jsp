@@ -1,5 +1,12 @@
+<%@page import="test.file.dao.FileDao"%>
+<%@page import="test.file.dto.FileDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	// 파일 목록 얻어오기 
+	List<FileDto> list=FileDao.getInstance().getList();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +29,29 @@
 				</tr>
 			</thead>
 			<tbody>
-			
+				<%for(FileDto tmp:list){ %>
+					<tr>
+						<td><%=tmp.getNum() %></td>
+						<td><%=tmp.getWriter() %></td>
+						<td><%=tmp.getTitle() %></td>
+						<td>
+							<a href="${pageContext.request.contextPath}/file/download?num=<%=tmp.getNum() %>"><%=tmp.getOrgFileName() %></a>
+						</td>
+						<td><%=tmp.getFileSize() %></td>
+						<td><%=tmp.getRegdate() %></td>
+					</tr>
+				<%} %>
 			</tbody>
 		</table>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
