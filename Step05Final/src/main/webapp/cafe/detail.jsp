@@ -12,7 +12,8 @@
 	String sessionId=session.getId();
 	//System.out.println(sessionId);
 	
-	boolean isReaded=CafeDao.getInstance().insertReaded(num, sessionId);
+	//이미 읽었는지 여부를 얻어낸다 
+	boolean isReaded=CafeDao.getInstance().isReaded(num, sessionId);
 	if(!isReaded){
 		//글 조회수도 1 증가 시킨다
 		CafeDao.getInstance().addViewCount(num);
