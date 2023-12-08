@@ -17,9 +17,19 @@
 	}
 
 	//2. DB 에서 삭제하기
+	CafeDao.getInstance().deleteRef(num);
 	boolean isSuccess=CafeDao.getInstance().delete(num);
 	//3. 응답하기 
 	//응답
 	String cPath=request.getContextPath();
 	response.sendRedirect(cPath+"/cafe/list.jsp");	
 %>    
+
+
+
+
+
+
+
+
+

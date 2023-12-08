@@ -30,6 +30,38 @@ public class CafeDao {
 		//여기서 리턴해주는 값은 null 이 아니다 
 		return dao;
 	}
+	//삭제한 글에 대한 참조를 삭제하는 메소드
+	public boolean deleteRef(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "DELETE FROM readed_data"
+					+ " WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩 할 내용이 있으면 바인딩
+			pstmt.setInt(1, num);
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	//글을 읽었다고 표시해주는 메소드 
 	public boolean insertReaded(int num, String id) {
 		Connection conn = null;
