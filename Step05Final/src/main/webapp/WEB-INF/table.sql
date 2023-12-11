@@ -37,8 +37,8 @@ CREATE TABLE readed_data(
 	num NUMBER REFERENCES board_cafe(num),
 	session_id VARCHAR2(50)
 )
-
-drop table readed_data
+delete from readed_data;
+drop table readed_data;
 
 -- 페이징 처리를 하기 위해서는 1. 정렬  2. 행번호 부여 3. 원하는 행만 select 
 
