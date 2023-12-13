@@ -51,7 +51,7 @@ FROM
 		ORDER BY num DESC) result1)
 WHERE rnum BETWEEN 6 AND 10
 
-
+select content from board_cafe where num=21
 
 
 
