@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String home(Model model, HttpSession session) {
 		// Model 객체에 담은 데이터는 request 영역에 담긴다
 		model.addAttribute("fortuneToday", "동쪽으로 가면 귀인을 만나요!");
@@ -21,7 +21,21 @@ public class HomeController {
 		model.addAttribute("id", "abc111");
 		model.addAttribute("amount", 2);
 		
+		//경로 파라미터 테스트를 위한 정보 담기
+		model.addAttribute("num", 999);
+		
 		//여기서 리턴한 문자열 앞에는 /templates/ 가 붙고 뒤에는 .html 이 붙어서  /templates/home.html 을 가리키게 된다.
 		return "home";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
