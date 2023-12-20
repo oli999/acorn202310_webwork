@@ -15,6 +15,11 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TestController {
 	
+	@GetMapping("/inc")
+	public String inc() {
+		return "sub/inc";
+	}
+	
 	//가상의 로그인 
 	@GetMapping("/user/login")
 	public String login(HttpSession session) {
