@@ -17,7 +17,14 @@
 		<p>
 			오늘의 운세 : <strong>[[${fortuneToday}]]</strong>
 		</p>
-		<p> <strong>[[${session.id}]]</strong> 님 반갑습니다</p>
+		<p th:if="${session.id != null}"> 
+			<strong>[[${session.id}]]</strong> 님 반갑습니다
+			<a th:href="@{/user/logout}">로그아웃</a>
+		</p>
+		<p th:unless="${session.id != null}">
+			로그인을 하세요
+			<a th:href="@{/user/login}">로그인 </a>
+		</p>
 		<ul>
 			<li><a th:href="@{/sub/play}">놀러가기</a></li>
 			<!-- Thymeleaf 에서 문자열은 single 따옴표를 이용해서 만들면된다 -->
