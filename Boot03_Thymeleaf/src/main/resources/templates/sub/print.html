@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/sub/print.html</title>
+</head>
+<body>
+	<p th:text="|hi ${name}|"></p>
+	<p th:text="${markup}"></p>
+	<p>[[${markup}]]</p>
+	<p th:utext="${markup}"></p>
+	<p>[(${markup})]</p>
+	<div>
+		<p>[[${a}]]</p>
+	</div>
+	<div th:with="message=${name}">
+    	<p th:text="${message}"></p>
+    </div>
+    <p>[[${#uris.escapePath(url)}]]</p>
+    <p>[[${#httpServletRequest.getContextPath()}]]</p>
+</div>
+</body>
+</html>

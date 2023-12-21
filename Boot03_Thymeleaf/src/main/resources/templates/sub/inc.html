@@ -13,10 +13,16 @@
 		</ul>
 	</div>
 	<!-- insert 하면 이 div 안에 include 된 내용이 들어 간다 -->
-	<div th:insert="~{/include/footer}"></div>
+	<div th:insert="~{/include/footer :: one}"></div>
 	
 	<!-- replace 하면 이 div 를 대체해서 include 된 내용이 들어 간다 -->
 	<div th:replace="~{/include/footer :: one}"></div>
+
+	<div th:replace="~{/include/footer :: two}"></div>
+	
+	<div th:replace="~{/include/footer :: myFooter('hi footer')}"></div>
+	
+	<div th:replace="~{/include/footer2}"></div>
 </body>
 </html>
 
