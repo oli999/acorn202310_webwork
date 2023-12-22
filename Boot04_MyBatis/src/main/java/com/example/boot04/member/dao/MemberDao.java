@@ -18,6 +18,10 @@ public class MemberDao {
 	@Autowired
 	SqlSession session;
 	
+	public void insert(MemberDto dto) {
+		session.insert("member.insert", dto);
+	}
+	
 	//회원 목록 얻어오기
 	public List<MemberDto> getList(){
 		/*
