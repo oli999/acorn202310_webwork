@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	<select id="getList" resultType="memberDto">
+	<!-- 
+		1. 이 sql 문의 아이디는 getList 이다 따라서 dao 에서 이 sql문을 불러서 사용하려면
+		mapper 의 namespace.id 이기 때문에  "member.getList" 가 된다  
+		
+		2. resultType="select 된 row 하나를 담을 data type 설정"
+	 -->
+	<select id="getList" resultType="com.example.boot04.member.dto.MemberDto">
 		SELECT num, name, addr
 		FROM member
 		ORDER BY num ASC
 	</select>
+	
 </mapper>
