@@ -18,7 +18,17 @@ public class MemberDao {
 	@Autowired
 	SqlSession session;
 	
+	public void delete(int num) {
+		
+		session.delete("member.delete", num);
+	}
+	
 	public void insert(MemberDto dto) {
+		/*
+		 *  mapper 의 namespace => member
+		 *  sql 의 id => insert
+		 *  parameterType => MemberDto 
+		 */
 		session.insert("member.insert", dto);
 	}
 	

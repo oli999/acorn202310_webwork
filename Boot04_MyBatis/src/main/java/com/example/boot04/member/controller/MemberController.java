@@ -16,6 +16,14 @@ public class MemberController {
 	//의존객체 주입 받기 (Dependency Injection)
 	@Autowired MemberDao dao;
 	
+	//회원정보 삭제 요청 처리
+	@GetMapping("/member/delete")
+	public String delete(int num) { // int type 으로 받으면 자동으로 숫자로 바꿔서 파라미터를 추출해서 전달해준다
+		//MemberDao 객체를 이용해서 회원 한명의 정보 삭제하기 
+		dao.delete(num);
+		return "redirect:/member/list";
+	}
+	
 	//회원정보 저장 요청처리
 	@PostMapping("/member/insert")
 	public String insert(String name, String addr) { //전송되는 파라미터의 이름과 동일하게 매개변수를 선언하면 자동추출 
