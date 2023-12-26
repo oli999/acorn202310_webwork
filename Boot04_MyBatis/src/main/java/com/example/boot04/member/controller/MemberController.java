@@ -16,6 +16,28 @@ public class MemberController {
 	//의존객체 주입 받기 (Dependency Injection)
 	@Autowired MemberDao dao;
 	
+	//회원정보 수정 요청 처리
+	@PostMapping("/member/update")
+	public String update(MemberDto dto) {
+		/*
+		 *  매개변수를 dto 로 선언하면 전달되는 파라미터가 자동 추출되고 추출된 파라미터가
+		 *  dto 에 자동으로 담겨서 전달된다. 
+		 */
+		dao.update(dto);
+		return "member/update";
+	}
+	
+	//회원정보 수정 폼 요청 처리
+	@GetMapping("/member/updateform")
+	public String updateform(int num, Model model) {
+		// 파라미터로 전달되는 회원의 번호를 이용해서 수정할 회원의 정보를 얻어온다
+		MemberDto dto=dao.getData(num);
+		// Model 객체에 수정할 회원의 정보를 담고
+		model.addAttribute("dto", dto);
+		// templates/member/updateform.html  페이지를 이용해서 응답 
+		return "member/updateform";
+	}
+	
 	//회원정보 삭제 요청 처리
 	@GetMapping("/member/delete")
 	public String delete(int num) { // int type 으로 받으면 자동으로 숫자로 바꿔서 파라미터를 추출해서 전달해준다
