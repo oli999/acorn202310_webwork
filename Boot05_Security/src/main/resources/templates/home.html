@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/templates/home.html</title>
+</head>
+<body>
+	<div class="container">
+		<div sec:authorize="isAuthenticated()">
+			<strong sec:authentication="name"></strong> 님 로그인중
+		</div>
+		<h1>인덱스 페이지 입니다</h1>
+		
+	</div>
+</body>
+</html>
