@@ -30,6 +30,12 @@ public class HomeController {
 		// templates/notice.html 페이지로 forward 이동해서 응답하기 
 		return "notice";
 	}
+	
+	@ResponseBody
+	@GetMapping("/study")
+	public String study() {
+		return "let's study!";
+	}
 
 }
 

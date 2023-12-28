@@ -2,8 +2,13 @@ package com.example.boot05.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration //설정 클래스라고 알려준다
@@ -22,9 +27,34 @@ public class SecurityConfig {
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
 				.anyRequest().authenticated() //위에 명시한 이외의 모든 요청은 로그인해야지 요청가능하게
+		)
+		.formLogin(config -> 
+			config
+				.loginProcessingUrl("/user/login")
+				.usernameParameter("userName") 
+				.passwordParameter("password")
+				.successForwardUrl("/user/login_success")
+				.permitAll()
 		);
 		//설정된 정보대로 SecurityFilterChain 객체를 만들어서 반환한다 
 		return httpSecurity.build();
+	}
+	
+	//비밀번호를 암호화 해주는 객체를 bean 으로 만든다.
+	@Bean
+	PasswordEncoder passwordEncoder() { 
+		return new BCryptPasswordEncoder();
+	}
+	//인증 메니저 객체를 bean 으로 만든다. (Spring Security 가 자동 로그인 처리할때도 사용되는 객체)
+	@Bean
+	AuthenticationManager authenticationManager(HttpSecurity http, 
+			BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailService) throws Exception {
+	    
+		return http.getSharedObject(AuthenticationManagerBuilder.class) 
+	      .userDetailsService(userDetailService)
+	      .passwordEncoder(bCryptPasswordEncoder)
+	      .and()
+	      .build();
 	}
 }
 
