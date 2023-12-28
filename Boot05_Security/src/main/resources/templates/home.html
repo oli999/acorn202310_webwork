@@ -9,8 +9,23 @@
 		<div sec:authorize="isAuthenticated()">
 			<strong sec:authentication="name"></strong> 님 로그인중
 		</div>
+		<div sec:authorize="!isAuthenticated()">
+			로그인중이 아님
+			<a th:href="@{/user/loginform}">로그인 하러가기</a>
+		</div>
 		<h1>인덱스 페이지 입니다</h1>
-		
+		<ul>
+			<li><a th:href="@{/play}">놀러가기(로그인 필요없음)</a></li>
+			<li><a th:href="@{/notice}">공지사항 보기 (로그인 필요없음)</a></li>
+			<li><a th:href="@{/study}">공부하러 가기 (로그인 필요)</a></li>
+		</ul>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
