@@ -3,6 +3,7 @@ package com.example.boot06;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
@@ -17,7 +18,36 @@ public class HomeController {
 		// templates/home.html 을 타임리프 뷰 엔진이 해석해서 응답 
 		return "home";
 	}
+	@ResponseBody
+	@GetMapping("/sub/study")
+	public String study() {
+		return "열심히 공부해요";
+	}
+	
+	@ResponseBody
+	@GetMapping("/sub/play")
+	public String play() {
+		return "열심히 놀아요";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
