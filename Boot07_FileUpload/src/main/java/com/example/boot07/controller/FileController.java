@@ -75,7 +75,9 @@ public class FileController {
 		//저장할 파일의 전체 경로 구성하기
 		String filePath=fileLocation+File.separator+saveFileName;
 		try {
+			//업로드된 파일을 이동시킬 목적지 File 객체
 			File f=new File(filePath);
+			//MultipartFile 객체의 메소드를 통해서 실제로 이동시키기(전송하기)
 			myFile.transferTo(f);
 		}catch(Exception e) {
 			e.printStackTrace();
