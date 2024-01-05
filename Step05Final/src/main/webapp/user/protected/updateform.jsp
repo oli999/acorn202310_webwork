@@ -57,7 +57,7 @@
 			<button type="reset">취소</button>
 		</form>
 		<!-- 화면에 보이지 않는 이미지 선택할 input type="file" -->
-		<input type="file" id="image" accept="image/*"/>
+		<input type="file" id="image"  accept="image/*"/>
 	</div>
 	<script>
 		//링크를 클릭했을때 
