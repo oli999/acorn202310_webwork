@@ -9,3 +9,29 @@ CREATE TABLE user_tbl(
 CREATE SEQUENCE user_seq;
 
 SELECT * FROM user_tbl;
+
+-- 이미지 겔러리를 만들기 위한 테이블 
+CREATE TABLE board_gallery(
+    num NUMBER PRIMARY KEY,
+    writer VARCHAR2(100),
+    caption VARCHAR2(100),   -- 이미지에 대한 설명
+    saveFileName VARCHAR2(100), -- 업로드된 이미지의 이름
+    regdate DATE -- 이미지 업로드 날짜 
+);
+
+CREATE SEQUENCE board_gallery_seq;
+
+SELECT * FROM board_gallery;
+
+
+
+
+
+
+
+
+
+
+
+
+
