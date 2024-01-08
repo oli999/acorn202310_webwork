@@ -1,0 +1,11 @@
+CREATE TABLE user_tbl(
+	id NUMBER PRIMARY KEY,
+	userName VARCHAR2(20) UNIQUE,
+	password VARCHAR2(100) NOT NULL,
+	email VARCHAR2(100) UNIQUE,
+	role VARCHAR2(10) NOT NULL
+);
+
+CREATE SEQUENCE user_seq;
+
+SELECT * FROM user_tbl;

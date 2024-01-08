@@ -7,7 +7,7 @@
 <body>
 	<div class="container">
 		<h3>회원 가입 폼</h3>
-		<form th:action="@{/user/signup}" method="post">
+		<form th:action="@{/user/signup}" method="post" novalidate>
 			<div>
 				<label for="userName">아이디(사용자명)</label>
 				<input type="text" name="userName" id="userName"/>
