@@ -4,4 +4,5 @@ import com.example.boot09.dto.UserDto;
 
 public interface UserDao {
 	public void insert(UserDto dto);
+	public UserDto getData(String userName);
 }

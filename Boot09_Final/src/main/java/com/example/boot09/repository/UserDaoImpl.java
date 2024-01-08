@@ -18,7 +18,21 @@ public class UserDaoImpl implements UserDao{
 		session.insert("user.insert", dto);
 	}
 
+	@Override
+	public UserDto getData(String userName) {
+		
+		return session.selectOne("user.getData", userName);
+	}
+
 }
+
+
+
+
+
+
+
+
 
 
 

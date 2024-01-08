@@ -6,4 +6,9 @@
 		(id, userName, password, email, role)
 		VALUES(user_seq.NEXTVAL, #{userName}, #{password}, #{email}, #{role})
 	</insert>
+	<select id="getData" parameterType="String" resultType="userDto">
+		SELECT id, userName, password, email, role
+		FROM user_tbl
+		WHERE userName=#{userName}
+	</select>
 </mapper>
