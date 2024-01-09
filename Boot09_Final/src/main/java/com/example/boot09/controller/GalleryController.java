@@ -14,6 +14,12 @@ import com.example.boot09.service.GalleryService;
 public class GalleryController {
 	@Autowired private GalleryService service;
 	
+	@GetMapping("/gallery/delete")
+	public String delete(int num) {
+		service.deleteOne(num);
+		return "gallery/delete";
+	}
+	
 	@GetMapping("/gallery/detail")
 	public String detail(int num, Model model) {
 		service.selectOne(model, num);

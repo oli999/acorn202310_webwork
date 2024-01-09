@@ -58,8 +58,13 @@ public class GalleryServiceImpl implements GalleryService{
 	public void selectOne(Model model, int num) {
 		//num 에 해당하는 글 정보를 얻어와서 
 		GalleryDto dto=dao.getData(num);
+		
+		//로그인된 userName 을 읽어온다.  (로그인 하지 않은 경우 null 일수도 있다)
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		
 		//모델객체에 담는다.
 		model.addAttribute("dto", dto);
+		model.addAttribute("userName", userName);
 	}
 
 	@Override
@@ -98,6 +103,24 @@ public class GalleryServiceImpl implements GalleryService{
 		model.addAttribute("endPageNum", endPageNum);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("pageNum", pageNum);
+	}
+
+	@Override
+	public void deleteOne(int num) {
+		//삭제할 글의 정보를 얻어온다.
+		GalleryDto dto=dao.getData(num);
+		//로그인된 userName 을 읽어온다.  (로그인 하지 않은 경우 null 일수도 있다)
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		//로그인된 사용자와 글의 작성자가 같은지 확인해서 같지 않으면 Exception 을 발생시킨다.
+		if(!dto.getWriter().equals(userName)) {
+			//예외를 발생시킨다
+			throw new RuntimeException("남의 파일 지우면 혼난다!");
+		}
+		//사진을 파일 시스템에서 삭제
+		String filePath=fileLocation+File.separator+dto.getSaveFileName();
+		new File(filePath).delete();
+		//DB 에서 삭제
+		dao.delete(num);
 	}
 
 }
