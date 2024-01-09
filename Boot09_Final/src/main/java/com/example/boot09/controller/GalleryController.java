@@ -2,8 +2,10 @@ package com.example.boot09.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.boot09.dto.GalleryDto;
 import com.example.boot09.service.GalleryService;
@@ -12,10 +14,15 @@ import com.example.boot09.service.GalleryService;
 public class GalleryController {
 	@Autowired private GalleryService service;
 	
-	
+	//전달되는 pageNum 이 있는지 확인해서 있으면 추출하고 없으면 기본값 1 로 설정
 	@GetMapping("/gallery/list")
-	public String list() {
-		
+	public String list(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		/*
+		 *  서비스에 Model 객체와 pageNum 을 전달해서 
+		 *  Model 에 pageNum 에 해당하는 글 목록이 담기도록 한다.
+		 *  Model 에 담긴 내용을 view page(Thymeleaf 템플릿페이지) 에서 사용할수 있다
+		 */
+		service.selectPage(model, pageNum);
 		return "gallery/list";
 	}
 	

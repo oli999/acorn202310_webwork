@@ -7,5 +7,5 @@ import com.example.boot09.dto.GalleryDto;
 public interface GalleryService {
 	public void addToGallery(GalleryDto dto);
 	public void selectOne(Model model, int num);
-	public void selectAll(Model model, int pageNum);
+	public void selectPage(Model model, int pageNum);
 }
