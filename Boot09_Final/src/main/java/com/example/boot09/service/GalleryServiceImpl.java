@@ -56,7 +56,10 @@ public class GalleryServiceImpl implements GalleryService{
 
 	@Override
 	public void selectOne(Model model, int num) {
-		
+		//num 에 해당하는 글 정보를 얻어와서 
+		GalleryDto dto=dao.getData(num);
+		//모델객체에 담는다.
+		model.addAttribute("dto", dto);
 	}
 
 	@Override

@@ -14,6 +14,12 @@ import com.example.boot09.service.GalleryService;
 public class GalleryController {
 	@Autowired private GalleryService service;
 	
+	@GetMapping("/gallery/detail")
+	public String detail(int num, Model model) {
+		service.selectOne(model, num);
+		return "gallery/detail";
+	}
+	
 	//전달되는 pageNum 이 있는지 확인해서 있으면 추출하고 없으면 기본값 1 로 설정
 	@GetMapping("/gallery/list")
 	public String list(@RequestParam(defaultValue = "1") int pageNum, Model model) {
