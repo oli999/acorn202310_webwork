@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.example.boot09.dto.GalleryDto;
+import com.example.boot09.exception.NotOwnerException;
 import com.example.boot09.repository.GalleryDao;
 
 @Service
@@ -114,7 +115,7 @@ public class GalleryServiceImpl implements GalleryService{
 		//로그인된 사용자와 글의 작성자가 같은지 확인해서 같지 않으면 Exception 을 발생시킨다.
 		if(!dto.getWriter().equals(userName)) {
 			//예외를 발생시킨다
-			throw new RuntimeException("남의 파일 지우면 혼난다!");
+			throw new NotOwnerException("이건 당신의 소유가 아닙니다");
 		}
 		//사진을 파일 시스템에서 삭제
 		String filePath=fileLocation+File.separator+dto.getSaveFileName();
