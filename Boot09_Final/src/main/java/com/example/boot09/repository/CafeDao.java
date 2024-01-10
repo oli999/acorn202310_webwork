@@ -8,4 +8,5 @@ public interface CafeDao {
 	public List<CafeDto> getList(CafeDto dto);
 	public int getCount();
 	public void insert(CafeDto dto);
+	public CafeDto getData(int num);
 }

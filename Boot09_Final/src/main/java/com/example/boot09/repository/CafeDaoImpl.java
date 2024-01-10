@@ -40,6 +40,12 @@ public class CafeDaoImpl implements CafeDao{
 		session.insert("cafe.insert", dto);
 	}
 
+	@Override
+	public CafeDto getData(int num) {
+		
+		return session.selectOne("cafe.getData", num);
+	}
+
 }
 
 

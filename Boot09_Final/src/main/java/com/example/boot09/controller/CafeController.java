@@ -18,6 +18,15 @@ public class CafeController {
 	@Autowired 
 	private CafeService service;
 	
+	@GetMapping("/cafe/detail")
+	public String detail(Model model, int num) {
+		
+		service.getDetail(model, num);
+		
+		return "cafe/detail";
+	}
+	
+	
 	@PostMapping("/cafe/insert")
 	public String insert(CafeDto dto) {
 		//서비스를 이용해서 새글을 저장한다

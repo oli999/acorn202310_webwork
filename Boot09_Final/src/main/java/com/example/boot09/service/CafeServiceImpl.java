@@ -68,6 +68,18 @@ public class CafeServiceImpl implements CafeService{
 		cafeDao.insert(dto);
 	}
 
+	@Override
+	public void getDetail(Model model, int num) {
+		//글번호를 이용해서 글 하나의 정보를 얻어와서 
+		CafeDto dto=cafeDao.getData(num);
+		//userName 도 읽어와서 담아준다(로그인 되지 않았다면 null 이다)
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		//Model 객체에 담아준다.
+		model.addAttribute("dto", dto);
+		model.addAttribute("userName", userName);
+	}
+
 }
 
 
