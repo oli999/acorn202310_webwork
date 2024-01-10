@@ -18,6 +18,18 @@ public class CafeController {
 	@Autowired 
 	private CafeService service;
 	
+	@PostMapping("/cafe/update")
+	public String update(CafeDto dto) {
+		service.updateContent(dto);
+		return "redirect:/cafe/detail?num="+dto.getNum();
+	}
+	
+	@GetMapping("/cafe/updateform")
+	public String updateform(Model model, int num) {
+		service.getData(model, num);
+		return "cafe/updateform";
+	}
+	
 	@GetMapping("/cafe/delete")
 	public String delete(int num) {
 		service.deleteContent(num);

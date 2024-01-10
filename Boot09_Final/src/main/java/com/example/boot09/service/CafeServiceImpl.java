@@ -94,6 +94,17 @@ public class CafeServiceImpl implements CafeService{
 		cafeDao.delete(num);
 	}
 
+	@Override
+	public void getData(Model model, int num) {
+		CafeDto dto=cafeDao.getData(num);
+		model.addAttribute("dto", dto);
+	}
+
+	@Override
+	public void updateContent(CafeDto dto) {
+		cafeDao.update(dto);
+	}
+
 }
 
 

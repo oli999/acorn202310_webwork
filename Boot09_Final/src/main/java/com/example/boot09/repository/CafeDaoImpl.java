@@ -51,6 +51,11 @@ public class CafeDaoImpl implements CafeDao{
 		session.delete("cafe.delete", num);
 	}
 
+	@Override
+	public void update(CafeDto dto) {
+		session.update("cafe.update", dto);
+	}
+
 }
 
 
