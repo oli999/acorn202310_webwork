@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.example.boot09.dto.CafeDto;
+import com.example.boot09.exception.NotOwnerException;
 import com.example.boot09.repository.CafeDao;
 
 @Service
@@ -78,6 +79,19 @@ public class CafeServiceImpl implements CafeService{
 		//Model 객체에 담아준다.
 		model.addAttribute("dto", dto);
 		model.addAttribute("userName", userName);
+	}
+
+	@Override
+	public void deleteContent(int num) {
+		//글 작성자와 
+		String writer=cafeDao.getData(num).getWriter();
+		//로그인된 사용자와 같은 경우에만 삭제
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		if(!writer.equals(userName)) {
+			throw new NotOwnerException("글 작성자와 일치 하지 않습니다");
+		}
+		//DB 에서 num 에 해당하는 글 삭제하기
+		cafeDao.delete(num);
 	}
 
 }

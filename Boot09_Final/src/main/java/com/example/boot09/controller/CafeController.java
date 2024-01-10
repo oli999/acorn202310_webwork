@@ -18,6 +18,12 @@ public class CafeController {
 	@Autowired 
 	private CafeService service;
 	
+	@GetMapping("/cafe/delete")
+	public String delete(int num) {
+		service.deleteContent(num);
+		return "redirect:/cafe/list";
+	}
+	
 	@GetMapping("/cafe/detail")
 	public String detail(Model model, int num) {
 		

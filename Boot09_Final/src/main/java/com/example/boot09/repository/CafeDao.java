@@ -9,4 +9,5 @@ public interface CafeDao {
 	public int getCount();
 	public void insert(CafeDto dto);
 	public CafeDto getData(int num);
+	public void delete(int num);
 }
