@@ -19,6 +19,8 @@ CREATE TABLE board_gallery(
     regdate DATE -- 이미지 업로드 날짜 
 );
 
+SELECT * FROM board_gallery ORDER BY num DESC;
+
 CREATE SEQUENCE board_gallery_seq;
 
 -- LAG(칼럼명, 칸수, 존재하지 않을시 기본값) OVER (정렬 조건)

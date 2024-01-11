@@ -27,6 +27,7 @@ public class ImageController {
 			MediaType.IMAGE_GIF_VALUE}
 	)
 	public byte[] image(@PathVariable("imageName") String name) throws IOException{
+		
 		//읽어들일 파일의 절대 경로 
 		String absolutePath=fileLocation + File.separator + name;
 		// 파일에서 읽어들일 InputStream 
@@ -35,3 +36,12 @@ public class ImageController {
 		return IOUtils.toByteArray(is);
 	}	
 }
+
+
+
+
+
+
+
+
+

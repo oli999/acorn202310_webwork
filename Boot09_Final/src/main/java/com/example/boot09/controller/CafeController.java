@@ -58,9 +58,9 @@ public class CafeController {
 	}
 	
 	@GetMapping("/cafe/list")
-	public String list(Model model, @RequestParam(defaultValue = "1") int pageNum) {
-		
-		service.getList(model, pageNum);
+	public String list(Model model, CafeDto dto) {
+		//dto 에는 검색키워드가 있을수도 있고 없을수도 있다
+		service.getList(model, dto);
 		
 		return "cafe/list";
 	}
