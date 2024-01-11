@@ -15,6 +15,14 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@GetMapping("/user/updateform")
+	public String updateForm(Model model) {
+		
+		service.getInfo(model);
+		
+		return "user/updateform";
+	}
+	
 	//개인 정보 보기 요청 처리
 	@GetMapping("/user/info")
 	public String info(Model model) {
