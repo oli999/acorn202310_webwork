@@ -1,6 +1,7 @@
 package com.example.boot09.dto;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,8 @@ public class UserDto {
 	private String role;
 	private String profile;
 	private String regdate;
+	//프로필 사진 업로드 처리를 위한 필드
+	private MultipartFile image;
 }
 
 

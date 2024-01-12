@@ -15,6 +15,13 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@PostMapping("/user/update")
+	public String update(UserDto dto) {
+		
+		//개인 정보 보기로 다시 리다일렉트 시킨다 
+		return "redirect:/user/info";
+	}
+	
 	@GetMapping("/user/updateform")
 	public String updateForm(Model model) {
 		
