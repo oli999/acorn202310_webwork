@@ -19,6 +19,7 @@ public class UserDto {
 	//사용자명 은 중복된 데이터가 들어가지 않도록 UNIQUE KEY 를 설정해야 한다
 	private String userName;
 	private String password;
+	private String newPassword;
 	private String email;
 	//Authority 정보를 저장할 칼럼 ROLE_XXX 형식이다. 
 	private String role;

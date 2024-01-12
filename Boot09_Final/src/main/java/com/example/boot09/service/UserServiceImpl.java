@@ -3,9 +3,12 @@ package com.example.boot09.service;
 import java.io.File;
 import java.util.UUID;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.boot09.dto.UserDto;
+import com.example.boot09.exception.PasswordException;
 import com.example.boot09.repository.UserDao;
 
 // 서비스클래스는 @Service 어노테이션을 이용해서 bean 으로 만든다 
@@ -76,6 +80,28 @@ public class UserServiceImpl implements UserService{
 		
 		//dao 를 이용해서 수정반영한다
 		dao.update(dto);
+	}
+
+	@Override
+	public void updatePassword(UserDto dto) {
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		//기존의 비밀번호를 읽어와서 
+		String password=dao.getData(userName).getPassword();
+		//입력한 비밀번호와 비교
+		boolean isValid=BCrypt.checkpw(dto.getPassword(), password);
+		if(!isValid) { //만일 일치 하지 않으면
+			throw new PasswordException("기존 비밀번호가 일치하지 않아요!");
+		}
+		//비밀번호 수정 작업을 한다.
+		//새 비밀번호를 암호화해서 
+		String encodedPwd=encoder.encode(dto.getNewPassword());
+		//dto 에 담는다
+		dto.setNewPassword(encodedPwd);
+		//userName 도 dto 에 담는다.
+		dto.setUserName(userName);
+		//DB 에 수정반영
+		dao.updatePwd(dto);
+		
 	}
 
 }

@@ -29,6 +29,11 @@ public class UserDaoImpl implements UserDao{
 		session.update("user.update", dto);
 	}
 
+	@Override
+	public void updatePwd(UserDto dto) {
+		session.update("user.updatePwd", dto);
+	}
+
 }
 
 

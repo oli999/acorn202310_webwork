@@ -12,6 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ExceptionController {
 	
+	@ExceptionHandler(PasswordException.class)
+	public String password(PasswordException pe, Model model) {
+		
+		model.addAttribute("exception", pe);
+		
+		return "error/password";
+	}
+	
 	// spring framework 가 동작하는 중에 NotOwnerException type 의 예외가 발생하면 호출되는 메소드
 	@ExceptionHandler(NotOwnerException.class)
 	public String notOwner(NotOwnerException noe, Model model) {
