@@ -13,6 +13,7 @@
 	#image{
 		display: none;
 	}
+	
 </style>
 </head>
 <body>
@@ -28,8 +29,8 @@
 				<input type="text" id="email" name="email" th:value="${dto.email}"/>
 			</div>
 			<div>
-				<label>프로필 이미지</label>
-				<div>
+				<label>프로필 이미지 (아래 이미지를 클릭하거나 이미지를 drop 하세요)</label>
+				<div id="dropZone">
 					<a href="javascript:" id="profileLink">
 						<th:block th:if="${dto.profile eq null}">
 							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -80,6 +81,43 @@
 					link.innerText="";
 					//새로 img 요소를 추가 하기 
 					link.append(img);
+				};
+			}
+		});
+		
+		// div 의 참조값 
+		const dropZone=document.querySelector("#dropZone");
+		dropZone.addEventListener("dragover", (e)=>{
+			e.preventDefault(); //기본 이벤트 막기
+		});
+		dropZone.addEventListener("drop", (e)=>{
+			e.preventDefault(); //기본 이벤트 막기
+			// event 객체 e 에는 drop 된 파일에 대한 정보가 들어 있다.
+			const files=e.dataTransfer.files;
+				
+			//이미지 파일인지 여부를 알아내서 이미지 파일이 아니면 동작하지 않도록 설정
+			const reg=/image/;
+			if(!reg.test(files[0].type)){ //파일의 type 이 만일 정규표현식을 통과하지 못하면
+				alert("이미지 파일이 아닙니다!");
+				return; // 함수를 여기서 끝내기 
+			}
+			
+			// input type="file" 에 drop 된 파일을 넣어주기
+			document.querySelector("#image").files=files;
+			
+			if(files.length>0){
+				//파일로 부터 데이터를 읽어들일 객체 생성
+				const reader=new FileReader();
+				//파일을 DataURL 형식의 문자열로 읽어들이기
+				reader.readAsDataURL(files[0]);
+				//로딩이 완료(파일데이터를 모드 읽었을때) 되었을때 실행할 함수 등록
+				reader.onload=(event)=>{
+					//읽은 파일 데이터 얻어내기 
+					const data=event.target.result;
+					// img 형식의 html 문자열을 만들어서 
+					let img=`<img id="profileImage" src="${data}">`;
+					// id 가 profileLink 인 요소에 끼워넣는다(HTML 로 해석하도록 끼워넣기)
+					document.querySelector("#profileLink").innerHTML=img;
 				};
 			}
 		});
