@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(UserDto dto) {
 		MultipartFile image=dto.getImage();
 		//만일 선택한 프로필 이미지가 있다면 
-		if(image!=null) {
+		if(image.getSize() != 0) {
 			//저장할 파일의 이름 겹치지 않는 유일한 문자열로 얻어내기
 			String saveFileName=UUID.randomUUID().toString();
 			//저장할 파일의 전체 경로 구성하기
@@ -74,6 +74,8 @@ public class UserServiceImpl implements UserService{
 		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
 		dto.setUserName(userName);
 		
+		//dao 를 이용해서 수정반영한다
+		dao.update(dto);
 	}
 
 }

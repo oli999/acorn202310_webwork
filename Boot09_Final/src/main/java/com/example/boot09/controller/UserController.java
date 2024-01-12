@@ -17,7 +17,7 @@ public class UserController {
 	
 	@PostMapping("/user/update")
 	public String update(UserDto dto) {
-		
+		service.updateUser(dto);
 		//개인 정보 보기로 다시 리다일렉트 시킨다 
 		return "redirect:/user/info";
 	}
