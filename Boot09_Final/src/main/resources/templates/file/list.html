@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>자료실 목록 입니다</h1>
-        <a th:href="@{/file/insertform}">새자료 올리기</a>
+        <a th:href="@{/file/upload_form}">새자료 올리기</a>
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
@@ -26,7 +26,7 @@
                     <td th:text="${tmp.writer}"></td>
                     <td th:text="${tmp.title}"></td>
                     <td>
-						<a th:href="@{/file/download(num=${tmp.num})}" th:text="${tmp.saveFileName}"></a>
+						<a th:href="@{/file/download(num=${tmp.num})}" th:text="${tmp.orgFileName}"></a>
 					</td>
                     <td th:text="${tmp.regdate}"></td>
                 </tr>

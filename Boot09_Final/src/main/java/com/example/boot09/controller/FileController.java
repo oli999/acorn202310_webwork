@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.boot09.dto.FileDto;
 import com.example.boot09.service.FileService;
@@ -12,6 +13,20 @@ import com.example.boot09.service.FileService;
 public class FileController {
 	@Autowired
 	private FileService service;
+	
+	@PostMapping("/file/upload")
+	public String upload(FileDto dto) {
+		
+		service.saveFile(dto);
+		
+		return "file/upload";
+	}
+	
+	@GetMapping("/file/upload_form")
+	public String insertForm() {
+		
+		return "file/upload_form";
+	}
 	
 	@GetMapping("/file/list")
 	public String list(Model model, FileDto dto) {
