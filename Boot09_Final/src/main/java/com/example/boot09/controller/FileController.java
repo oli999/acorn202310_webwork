@@ -1,6 +1,8 @@
 package com.example.boot09.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,12 @@ import com.example.boot09.service.FileService;
 public class FileController {
 	@Autowired
 	private FileService service;
+	
+	@GetMapping("/file/download")
+	public ResponseEntity<InputStreamResource> download(int num){
+		
+		return service.getFileData(num);
+	}
 	
 	@PostMapping("/file/upload")
 	public String upload(FileDto dto) {
