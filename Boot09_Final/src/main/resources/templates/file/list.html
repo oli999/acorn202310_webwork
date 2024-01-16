@@ -18,6 +18,7 @@
                     <th>제목</th>
                     <th>파일명</th>
                     <th>등록일</th>
+                    <th>삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,10 @@
 						<a th:href="@{/file/download(num=${tmp.num})}" th:text="${tmp.orgFileName}"></a>
 					</td>
                     <td th:text="${tmp.regdate}"></td>
+                    <td>
+						<a th:if="${tmp.writer eq session.userName}" 
+							th:href="@{/file/delete(num=${tmp.num})}">삭제</a>
+					</td>
                 </tr>
             </tbody>
         </table>

@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.boot09.dto.FileDto;
+import com.example.boot09.exception.NotOwnerException;
 import com.example.boot09.repository.FileDao;
 
 @Service
@@ -138,6 +139,24 @@ public class FileServiceImpl implements FileService{
 		}
 		//InputStreamResource 객체를 리턴해준다.
 		return responseEn;
+	}
+
+	@Override
+	public void deleteFile(int num) {
+		
+		//DB 에서 삭제할 파일의 정보를 읽어온다
+		FileDto dto=dao.getData(num);
+		//로그인된 사용자와 파일의 소유자가 같은지 확인해서 다르면 Exception 발생시키기
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		if(!dto.getWriter().equals(userName)) {
+			throw new NotOwnerException("파일의 소유자가 아닙니다!");
+		}
+		//파일 시스템에서 실제로 삭제하고
+		String filePath=fileLocation + File.separator + dto.getSaveFileName();
+		File f = new File(filePath);
+		f.delete();
+		//DB 에서도 삭제 
+		dao.delete(num);
 	}
 }
 

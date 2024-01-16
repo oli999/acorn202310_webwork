@@ -16,6 +16,12 @@ public class FileController {
 	@Autowired
 	private FileService service;
 	
+	@GetMapping("/file/delete")
+	public String delete(int num) {
+		service.deleteFile(num);
+		return "redirect:/file/list";
+	}
+	
 	@GetMapping("/file/download")
 	public ResponseEntity<InputStreamResource> download(int num){
 		
