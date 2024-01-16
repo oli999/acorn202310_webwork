@@ -71,14 +71,17 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public void getDetail(Model model, int num) {
+	public void getDetail(Model model, CafeDto dto) {
 		//글번호를 이용해서 글 하나의 정보를 얻어와서 
-		CafeDto dto=cafeDao.getData(num);
+		CafeDto resultDto=cafeDao.getDetail(dto);
+		//원래의 검색 조건을 글정보가 들어 있는 결과 dto 에 추가해준다. 
+		resultDto.setCondition(dto.getCondition());
+		resultDto.setKeyword(dto.getKeyword());
 		//userName 도 읽어와서 담아준다(로그인 되지 않았다면 null 이다)
 		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		//Model 객체에 담아준다.
-		model.addAttribute("dto", dto);
+		model.addAttribute("dto", resultDto);
 		model.addAttribute("userName", userName);
 	}
 

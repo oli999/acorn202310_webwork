@@ -37,9 +37,9 @@ public class CafeController {
 	}
 	
 	@GetMapping("/cafe/detail")
-	public String detail(Model model, int num) {
+	public String detail(Model model, CafeDto dto) {
 		
-		service.getDetail(model, num);
+		service.getDetail(model, dto);
 		
 		return "cafe/detail";
 	}
