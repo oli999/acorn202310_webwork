@@ -51,7 +51,11 @@ CREATE TABLE board_file(
 
 CREATE SEQUENCE board_file_seq; 
 
-
+SELECT num, writer, caption, saveFileName, regdate,
+	LAG(num, 1, 0) OVER (ORDER BY num DESC) AS prevNum,
+	LEAD(num, 1, 0) OVER (ORDER BY num DESC) AS nextNum
+FROM board_gallery
+ORDER BY num DESC
 
 
 
