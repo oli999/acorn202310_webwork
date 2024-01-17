@@ -59,7 +59,7 @@ ORDER BY num DESC
 
 
 
-
+select * from board_cafe order by num desc
 
 
 

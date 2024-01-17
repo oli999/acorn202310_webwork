@@ -15,10 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 
 /*
@@ -44,6 +46,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *  
  */
 
+@Slf4j
 @Controller
 public class SmartEditorController {
 	
@@ -52,9 +55,12 @@ public class SmartEditorController {
 	private String fileLocation; 
 	
 	//ajax 업로드 요청에 대해 응답을 하는 컨트롤러 메소드
-	@RequestMapping("/editor_upload")
+	@PostMapping("/editor_upload")
 	@ResponseBody
 	public String upload(HttpServletRequest request) throws IOException {
+		
+		log.info("/editor_upload 가 요청됨!");
+		
 	    //파일정보
 	    String sFileInfo = "";
 	    //파일명을 받는다 - 일반 원본파일명
@@ -132,6 +138,8 @@ public class SmartEditorController {
 	@ResponseBody
 	public byte[] editorImage(@PathVariable("imageName") String imageName) throws IOException {
 		
+		log.info(imageName+" 이미지를 응답합니다");
+		
 		String absolutePath=fileLocation+File.separator+imageName;
 		//파일에서 읽어들일 InputStream
 		InputStream is=new FileInputStream(absolutePath);
@@ -139,3 +147,12 @@ public class SmartEditorController {
 		return IOUtils.toByteArray(is);
 	}	
 }
+
+
+
+
+
+
+
+
+

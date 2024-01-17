@@ -17,7 +17,7 @@
 	</sql>
 	
 	<sql id="column">
-		num,writer,title,viewCount, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
+		num,writer,title,content,viewCount, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
 	</sql>
 
 	<update id="update" parameterType="cafeDto">
