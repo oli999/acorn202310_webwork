@@ -84,9 +84,18 @@ public class CafeServiceImpl implements CafeService{
 		//userName 도 읽어와서 담아준다(로그인 되지 않았다면 null 이다)
 		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
 		
+		//댓글 목록을 얻어온다 
+		//CafeDto 에 ref_group 번호를 담아서 dao 에 전달해서 댓글 목록을 얻어낸다
+		CafeCommentDto commentDto=new CafeCommentDto();
+		//원글의 글번호를 담아서 
+		commentDto.setRef_group(dto.getNum());
+		//원글에 달린 댓글 목록 얻어내기 
+		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
+		
 		//Model 객체에 담아준다.
 		model.addAttribute("dto", resultDto);
 		model.addAttribute("userName", userName);
+		model.addAttribute("commentList", commentList);
 	}
 
 	@Override
