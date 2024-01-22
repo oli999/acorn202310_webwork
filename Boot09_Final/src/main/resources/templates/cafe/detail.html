@@ -77,7 +77,25 @@
 			</script>
 		</th:block>
 			
-			
+		<h4>댓글을 입력해 주세요</h4>
+		<!-- 원글에 댓글을 작성할 폼 -->	
+		<form th:action="@{/cafe/comment_insert}" method="post">
+			<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
+			<input type="hidden" name="ref_group" th:value="${dto.num}"/>
+			<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
+			<input type="hidden" name="target_id" th:value="${dto.writer}"/>
+			<textarea name="content">[[${session.userName == null ? "댓글 작성을 위해 로그인이 필요합니다" : ""}]]</textarea>
+			<button type="submit">등록</button>
+		</form>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

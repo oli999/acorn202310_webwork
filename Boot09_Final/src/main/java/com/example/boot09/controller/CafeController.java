@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.boot09.dto.CafeCommentDto;
 import com.example.boot09.dto.CafeDto;
 import com.example.boot09.service.CafeService;
 
@@ -17,6 +17,14 @@ public class CafeController {
 	
 	@Autowired 
 	private CafeService service;
+	
+	@PostMapping("/cafe/comment_insert")
+	public String commentInsert(CafeCommentDto dto) {
+		//댓글 저장 처리를 하고 
+		service.saveComment(dto);
+		//해당글 자세히 보기로 다시 리다일렉트 시킨다 
+		return "redirect:/cafe/detail?num="+dto.getRef_group();
+	}
 	
 	@PostMapping("/cafe/update")
 	public String update(CafeDto dto) {
