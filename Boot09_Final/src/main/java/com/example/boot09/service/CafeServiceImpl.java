@@ -139,6 +139,18 @@ public class CafeServiceImpl implements CafeService{
 		commentDao.insert(dto);
 	}
 
+	@Override
+	public void deleteComment(int num) {
+		//로그인된 사용자와 댓글 작성자가 같은지 확인
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		String writer=commentDao.getData(num).getWriter();
+		if(!userName.equals(writer)) {
+			throw new NotOwnerException("댓글의 소유자가 아닙니다!");
+		}
+		//삭제 작업을 한다.
+		commentDao.delete(num);
+	}	
+
 }
 
 
