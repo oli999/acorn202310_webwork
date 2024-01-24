@@ -22,6 +22,18 @@ public class CafeController {
 	@Autowired 
 	private CafeService service;
 	
+	@ResponseBody
+	@PostMapping("/cafe/comment_update")
+	public Map<String, Object> commentUpdate(CafeCommentDto dto){
+		service.updateComment(dto);
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("isSuccess", true);
+		map.put("num", dto.getNum());
+		map.put("content", dto.getContent());
+		return map;
+	}
+	
 	@ResponseBody // Map 객체를 리턴하면 json 문자열이 응답되도록 @ResponseBody 어노테이션을 추가로 붙여준다.
 	@GetMapping("/cafe/comment_delete")
 	public Map<String, Object> commentDelete(int num){

@@ -14,4 +14,5 @@ public interface CafeService {
 	public void updateContent(CafeDto dto);
 	public void saveComment(CafeCommentDto dto);
 	public void deleteComment(int num);
+	public void updateComment(CafeCommentDto dto);
 }

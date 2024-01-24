@@ -40,6 +40,11 @@ public class CafeCommentDaoImpl implements CafeCommentDao{
 		return session.selectOne("cafeComment.getData", num);
 	}
 
+	@Override
+	public void update(CafeCommentDto dto) {
+		session.update("cafeComment.update", dto);
+	}
+
 }
 
 
