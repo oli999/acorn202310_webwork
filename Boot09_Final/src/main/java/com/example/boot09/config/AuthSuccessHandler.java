@@ -37,7 +37,6 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
         session.setAttribute("userName", userName);
 		//3. 로그인 성공이후 미리 저장된 요청이 있었는지 읽어와서
     	SavedRequest cashed=requestCache.getRequest(request, response);
-    	
     	//4. 만일 미리 저장된 요청이 없다면 (로그인 하지 않은 상태로 인증이 필요한 경로를 요청하지 않았다면)
         if(cashed==null) {
         	//5. 로그인 환영 페이지로 foward 이동 

@@ -253,9 +253,11 @@
 		//원글에 댓글달기 폼에 이벤트 submit 이벤트 발생했을때 실행할 함수 등록
 		document.querySelector(".comment-form")
 			.addEventListener("submit", (e)=>{
-				e.preventDefault();//폼 전송 막기
-				alert("로그인이 필요 합니다");
-				location.href="[[@{/}]]user/loginform";
+				if(!isLogin){
+					e.preventDefault();//폼 전송 막기
+					alert("로그인이 필요 합니다");
+					location.href="[[@{/}]]user/loginform";
+				}
 			});
 		
 		//댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
@@ -403,11 +405,19 @@
 		}
 		
 		function addReplyListener(selector){
+			
 			//답글 링크에 대한 처리 
 			const replyLinks=document.querySelectorAll(selector);
 			//반복문 돌면서 모든 링크에 이벤트 리스너 함수 등록하기 
 			for(let i=0; i<replyLinks.length; i++){
 				replyLinks[i].addEventListener("click", (e)=>{
+					
+					if(!isLogin){
+							e.preventDefault();//폼 전송 막기
+							alert("로그인이 필요 합니다");
+							location.href="[[@{/}]]user/loginform";
+					}
+					
 					//클릭한 a 요소의 data-num 속성의 value 값을 읽어온다. 
 					const num=e.target.getAttribute("data-num");
 					//보여주거나 숨길 form 의 참조값 얻어내기 
