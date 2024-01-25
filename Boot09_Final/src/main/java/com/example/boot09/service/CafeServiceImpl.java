@@ -109,10 +109,16 @@ public class CafeServiceImpl implements CafeService{
 		//원글에 달린 댓글 목록 얻어내기 
 		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
 		
+		//원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
+		int totalRow=commentDao.getCount(dto.getNum());
+		//댓글 전체 페이지의 갯수
+		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		
 		//Model 객체에 담아준다.
 		model.addAttribute("dto", resultDto);
 		model.addAttribute("userName", userName);
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("totalPageCount", totalPageCount);
 	}
 
 	@Override
