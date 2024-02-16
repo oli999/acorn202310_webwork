@@ -22,7 +22,8 @@ public class SecurityConfig {
 				"/user/loginform", "/user/login_fail", "/user/expired",
 				"/gallery/list", "/gallery/detail", "/upload/images/**",
 				"/cafe/list", "/cafe/detail","/cafe/comment_list",
-				"/file/list", "/file/download", "/api/**"};
+				
+				"/file/list", "/file/download", "/api/**", "/chat/**","/ws/**"};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		httpSecurity
@@ -30,6 +31,7 @@ public class SecurityConfig {
 			//동일한 origin 에서 iframe 을 사용할수 있도록 설정(default 값은 사용불가)
 			header.frameOptions(option->option.sameOrigin()) //SmartEditor 에서 필요함
 		)
+		.cors(config -> config.disable())
 		.csrf(csrf->csrf.disable())
 		.authorizeHttpRequests(config -> 
 			config

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/chat/home.html</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Chat Home</h1>
+		
+	</div>
+	<script>
+		const socket=new WebSocket("ws://localhost:9000/boot09/ws/chat");
+		socket.onopen = (e)=>{
+			console.log("open")
+		}
+		socket.onclose = (e)=>{
+			console.log("close")
+		}
+		socket.onerror = (e)=>{
+			console.log(e)
+			console.log("error")
+		}
+		socket.onmessage=(e)=>{
+			console.log("message")
+			console.log(e);
+			let data = JSON.parse(e.data)
+			console.log(data)
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
