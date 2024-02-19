@@ -34,6 +34,8 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 	//로그인 성공후 원래 목적지로 리다일렉트 시켜주기 위해 필요한 객체 
 	@Autowired
 	private CookieRequestCache requestCache;
+	
+	
 	//세션을 사용하지 않기 때문에 CookieRequestChache 를 사용해야 한다.
     public AuthSuccessHandler(CookieRequestCache requestCache) {
         super.setRequestCache(requestCache);
@@ -50,7 +52,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
         cookie.setHttpOnly(true); //웹브라우저에서 JavaScript에서 접근 불가 하도록 설정 
         cookie.setPath("/"); // 모든 경로에서 쿠키를 사용할수 있도록 설정 
         response.addCookie(cookie);
-        
+       
     	SavedRequest cashed=requestCache.getRequest(request, response);
         if(cashed==null) {
         	RequestDispatcher rd=request.getRequestDispatcher("/user/login_success");

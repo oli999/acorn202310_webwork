@@ -20,6 +20,8 @@ import com.example.boot10.filter.JwtFitler;
 import com.example.boot10.hander.AuthFailHandler;
 import com.example.boot10.hander.AuthSuccessHandler;
 
+import jakarta.servlet.http.Cookie;
+
 @Configuration //설정 클래스라고 알려준다
 @EnableWebSecurity //Security 를 설정하기 위한 어노테이션
 public class SecurityConfig {
@@ -37,7 +39,7 @@ public class SecurityConfig {
 			CookieRequestCache cookCache) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
 		String[] whiteList= {"/", "/user/signup_form", "/user/signup", 
-				"/user/loginform", "/user/login_fail", "/user/expired", "/user/logout"};
+				"/user/loginform", "/user/login_fail", "/user/expired"};
 		
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		httpSecurity
@@ -70,8 +72,13 @@ public class SecurityConfig {
 		.logout(config ->
 			config
 				.logoutUrl("/user/logout")//Spring Security 가 자동으로 로그아웃 처리 해줄 경로 설정
-				.logoutSuccessUrl("/")//로그 아웃 이후에 리다일렉트 시킬 경로 설정
-				.deleteCookies(jwtName) //로그아웃시  jwt 가 저장된 쿠키 삭제하기 
+				.logoutSuccessHandler((request, response, auth)->{
+					Cookie cook=new Cookie(jwtName, null);
+					cook.setMaxAge(0);
+					cook.setPath("/");
+					response.addCookie(cook);
+					response.sendRedirect(request.getContextPath()+"/");
+				})
 				.permitAll()
 		)
 		.exceptionHandling(config ->
