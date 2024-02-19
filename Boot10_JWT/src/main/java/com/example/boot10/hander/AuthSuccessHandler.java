@@ -53,7 +53,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
         
     	SavedRequest cashed=requestCache.getRequest(request, response);
         if(cashed==null) {
-        	RequestDispatcher rd=request.getRequestDispatcher("/users/login_success");
+        	RequestDispatcher rd=request.getRequestDispatcher("/user/login_success");
         	rd.forward(request, response);
         }else {
         	super.onAuthenticationSuccess(request, response, authentication);
