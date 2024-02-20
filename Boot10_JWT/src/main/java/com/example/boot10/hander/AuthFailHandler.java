@@ -34,10 +34,18 @@ public class AuthFailHandler implements AuthenticationFailureHandler{
         //에러 메세지를 담은 후에 
         request.setAttribute("errMsg",  errMsg);
         //로그인 폼으로 forward 이동하면서 에러메세지를 전달해 준다. 
-        request.getRequestDispatcher("/user/loginform?error").forward(request,  response);
+        request.getRequestDispatcher("/user/loginform?error=x").forward(request,  response);
 	}
 
 }
+
+
+
+
+
+
+
+
 
 
 

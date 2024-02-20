@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.boot10.dto.UserDto;
 import com.example.boot10.service.UserService;
@@ -95,7 +96,7 @@ public class UserController {
 		return "user/login_fail";
 	}
 	
-	@GetMapping("/user/loginform")
+	@RequestMapping("/user/loginform")
 	public String loginform() {
 		// templates/user/loginform.html 페이지로 forward 이동해서 응답 
 		return "user/loginform";
