@@ -1,4 +1,4 @@
-package com.example.boot10.hander;
+package com.example.boot10.handler;
 
 import java.io.IOException;
 

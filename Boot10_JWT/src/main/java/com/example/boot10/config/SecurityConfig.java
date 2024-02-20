@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.savedrequest.CookieRequestCache;
 
 import com.example.boot10.filter.JwtFitler;
-import com.example.boot10.hander.AuthFailHandler;
-import com.example.boot10.hander.AuthSuccessHandler;
+import com.example.boot10.handler.AuthFailHandler;
+import com.example.boot10.handler.AuthSuccessHandler;
 
 import jakarta.servlet.http.Cookie;
 
