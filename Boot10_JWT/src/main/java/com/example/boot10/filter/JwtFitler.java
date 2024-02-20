@@ -75,7 +75,8 @@ public class JwtFitler extends OncePerRequestFilter{
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
-		//다음 필터 chain 진행하기
+		System.out.println("JwtFilter 수행됨");
+		//다음 spring 필터 chain 진행하기
 		filterChain.doFilter(request, response);
 	}
 

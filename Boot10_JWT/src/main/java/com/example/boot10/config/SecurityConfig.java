@@ -74,9 +74,11 @@ public class SecurityConfig {
 				.logoutUrl("/user/logout")//Spring Security 가 자동으로 로그아웃 처리 해줄 경로 설정
 				.logoutSuccessHandler((request, response, auth)->{
 					Cookie cook=new Cookie(jwtName, null);
+					//쿠키를 삭제하기 위해 setMaxAge(0)
 					cook.setMaxAge(0);
 					cook.setPath("/");
 					response.addCookie(cook);
+					//쿠키 삭제후에 최상위 경로로 리다일렉트 이동
 					response.sendRedirect(request.getContextPath()+"/");
 				})
 				.permitAll()

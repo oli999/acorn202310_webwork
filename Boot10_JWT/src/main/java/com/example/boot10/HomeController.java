@@ -19,6 +19,10 @@ public class HomeController {
 		model.addAttribute("notice", notice);
 		return "home";
 	}
+	@GetMapping("/play")
+	public String play() {
+		return "play";
+	}
 }
 
 
