@@ -37,37 +37,18 @@ public class JwtFitler extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
-		// 쿠키에서 JWT 토큰 추출
-        Cookie[] cookies = request.getCookies();
-        // 쿠키에 
-        String jwtToken = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (jwtName.equals(cookie.getName())) {
-                    jwtToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
-      
+	
 		String authHeader=request.getHeader("Authorization");
 		String token=null;
 		String userName=null;
-		// 토큰 Bearer 로 시작 하는지 확인해서 
-		if(jwtToken.startsWith("Bearer+")) {
-			//앞에 "Bearer " 를 제외한 순수 토큰 문자열 얻어내기 
-			jwtToken=jwtToken.substring(7);
-			//유틸을 이용해서 토큰에 저장된 userName (subject) 를 얻어낸다
-			userName=jwtUtil.extractUsername(jwtToken);
-		}else if(authHeader != null && authHeader.startsWith("Bearer+")) {
+		
+		if(authHeader != null && authHeader.startsWith("Bearer+")) {
 			//앞에 "Bearer " 를 제외한 순수 토큰 문자열 얻어내기 
 			token=authHeader.substring(7);
 			//유틸을 이용해서 토큰에 저장된 userName (subject) 를 얻어낸다
 			userName=jwtUtil.extractUsername(token);
 		}
 		
-	
 		//userName 이 존재하고  Spring Security 에서 아직 인증을 받지 않은 상태라면 
 		if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			//DB 에서 UserDetails 객체를 얻어내서 
