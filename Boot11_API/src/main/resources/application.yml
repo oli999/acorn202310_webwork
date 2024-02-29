@@ -3,7 +3,6 @@
 server:
   port: 9000 # port 번호
   servlet:
-    context-path: /boot11 # context path 설정
     session:
       tracking-modes: cookie
 spring:
