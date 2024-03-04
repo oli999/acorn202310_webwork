@@ -2,6 +2,7 @@ package com.example.boot11.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	@Override
-	public List<GalleryDto> selectPage( int pageNum) {
+	public Map<String, Object> selectPage( int pageNum) {
 		
 		//보여줄 페이지의 시작 ROWNUM
 		int startRowNum = 1 + (pageNum-1) * PAGE_ROW_COUNT;
@@ -104,7 +105,15 @@ public class GalleryServiceImpl implements GalleryService{
 //		model.addAttribute("endPageNum", endPageNum);
 //		model.addAttribute("totalPageCount", totalPageCount);
 //		model.addAttribute("pageNum", pageNum);
-		return list;
+		
+		//react frontend 에서 필요한 데이터를 Map 에 담는다 
+		Map<String, Object> map = Map.of("list", list, 
+				"startPageNum", startPageNum,
+				"endPageNum", endPageNum,
+				"totalPageCount", totalPageCount,
+				"pageNum", pageNum);
+		
+		return map;
 	}
 
 	@Override
