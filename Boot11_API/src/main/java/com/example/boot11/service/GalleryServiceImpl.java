@@ -18,7 +18,7 @@ import com.example.boot11.repository.GalleryDao;
 @Service
 public class GalleryServiceImpl implements GalleryService{
 	//한 페이지에 몇개씩 표시할 것인지
-	final int PAGE_ROW_COUNT=8;
+	final int PAGE_ROW_COUNT=4;
 	//하단 페이지를 몇개씩 표시할 것인지
 	final int PAGE_DISPLAY_COUNT=5;
 	
@@ -57,16 +57,10 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	@Override
-	public void selectOne(Model model, int num) {
+	public GalleryDto selectOne(int num) {
 		//num 에 해당하는 글 정보를 얻어와서 
 		GalleryDto dto=dao.getData(num);
-		
-		//로그인된 userName 을 읽어온다.  (로그인 하지 않은 경우 null 일수도 있다)
-		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-		
-		//모델객체에 담는다.
-		model.addAttribute("dto", dto);
-		model.addAttribute("userName", userName);
+		return dto;
 	}
 
 	@Override

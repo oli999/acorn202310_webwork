@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,12 @@ import com.example.boot11.service.GalleryService;
 public class GalleryController {
 	
 	@Autowired GalleryService service;
+	
+	@GetMapping("/gallery/{num}")
+	public GalleryDto detail(@PathVariable("num") int num) {
+		
+		return service.selectOne(num);
+	}
 	
 	//겔러리 사진 추가 요청 처리 
 	@PostMapping("/gallery")
