@@ -1,6 +1,7 @@
 package com.example.boot11.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,10 +22,8 @@ public class CafeServiceImpl implements CafeService{
 	private CafeDao cafeDao;
 	
 	@Override
-	public void getList(Model model, CafeDto dto) {
-		// pageNum 에 해당하는 글정보를 select 에서 Model 객체에 담는 작업을 하면 된다.
+	public Map<String, Object> getList(int pageNum) {
 		
-		int pageNum=dto.getPageNum();
 		//보여줄 페이지의 시작 ROWNUM
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
 		//보여줄 페이지의 끝 ROWNUM
@@ -34,6 +33,8 @@ public class CafeServiceImpl implements CafeService{
 		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 		//하단 끝 페이지 번호
 		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		//임시로 빈 dto 를 생성해서 전체 글의 갯수를 얻어온다. 
+		CafeDto dto=new CafeDto();
 		//전체 글의 갯수
 		int totalRow=cafeDao.getCount(dto);
 		//전체 페이지의 갯수 구하기
@@ -51,13 +52,23 @@ public class CafeServiceImpl implements CafeService{
 		List<CafeDto> list=cafeDao.getList(dto);
 		
 		// view page 에 전달할 내용을 Model 객체에 담는다. 
-		model.addAttribute("list", list);
-		model.addAttribute("startPageNum", startPageNum);
-		model.addAttribute("endPageNum", endPageNum);
-		model.addAttribute("totalPageCount", totalPageCount);
-		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("dto", dto); //키워드정보가 들어 있는 dto 를 모델에 담기 
-		model.addAttribute("totalRow", totalRow);
+//		model.addAttribute("list", list);
+//		model.addAttribute("startPageNum", startPageNum);
+//		model.addAttribute("endPageNum", endPageNum);
+//		model.addAttribute("totalPageCount", totalPageCount);
+//		model.addAttribute("pageNum", pageNum);
+//		model.addAttribute("dto", dto); //키워드정보가 들어 있는 dto 를 모델에 담기 
+//		model.addAttribute("totalRow", totalRow);
+		
+		//react frontend 에서 필요한 데이터를 Map 에 담는다 
+		Map<String, Object> map = Map.of("list", list, 
+				"startPageNum", startPageNum,
+				"endPageNum", endPageNum,
+				"totalPageCount", totalPageCount,
+				"pageNum", pageNum);
+		
+		return map;
+		
 	}
 
 	@Override
@@ -70,18 +81,14 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public void getDetail(Model model, CafeDto dto) {
+	public CafeDto getDetail(CafeDto dto) {
 		//글번호를 이용해서 글 하나의 정보를 얻어와서 
 		CafeDto resultDto=cafeDao.getDetail(dto);
 		//원래의 검색 조건을 글정보가 들어 있는 결과 dto 에 추가해준다. 
 		resultDto.setCondition(dto.getCondition());
 		resultDto.setKeyword(dto.getKeyword());
-		//userName 도 읽어와서 담아준다(로그인 되지 않았다면 null 이다)
-		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-			
-		//Model 객체에 담아준다.
-		model.addAttribute("dto", resultDto);
-		model.addAttribute("userName", userName);
+	
+		return resultDto;
 	}
 
 	@Override
