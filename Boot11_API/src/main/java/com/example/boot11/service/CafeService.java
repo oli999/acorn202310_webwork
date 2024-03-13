@@ -8,7 +8,7 @@ import com.example.boot11.dto.CafeDto;
 
 
 public interface CafeService {
-	public Map<String, Object> getList(int pageNum);
+	public Map<String, Object> getList(CafeDto dto);
 	public void saveContent(CafeDto dto);
 	public CafeDto getDetail(CafeDto dto); //글 자세히 보기를 위한 기능 
 	public void deleteContent(int num);

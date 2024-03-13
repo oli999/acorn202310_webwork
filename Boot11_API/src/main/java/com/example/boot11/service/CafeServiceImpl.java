@@ -22,8 +22,9 @@ public class CafeServiceImpl implements CafeService{
 	private CafeDao cafeDao;
 	
 	@Override
-	public Map<String, Object> getList(int pageNum) {
-		
+	public Map<String, Object> getList(CafeDto dto) {
+		//CafeDto 로 부터 페이지 번호를 얻어낸다 
+		int pageNum=dto.getPageNum();
 		//보여줄 페이지의 시작 ROWNUM
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
 		//보여줄 페이지의 끝 ROWNUM
@@ -33,8 +34,7 @@ public class CafeServiceImpl implements CafeService{
 		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 		//하단 끝 페이지 번호
 		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
-		//임시로 빈 dto 를 생성해서 전체 글의 갯수를 얻어온다. 
-		CafeDto dto=new CafeDto();
+		
 		//전체 글의 갯수
 		int totalRow=cafeDao.getCount(dto);
 		//전체 페이지의 갯수 구하기
@@ -51,21 +51,13 @@ public class CafeServiceImpl implements CafeService{
 		//CafeDto 를 인자로 전달해서 글목록 얻어오기
 		List<CafeDto> list=cafeDao.getList(dto);
 		
-		// view page 에 전달할 내용을 Model 객체에 담는다. 
-//		model.addAttribute("list", list);
-//		model.addAttribute("startPageNum", startPageNum);
-//		model.addAttribute("endPageNum", endPageNum);
-//		model.addAttribute("totalPageCount", totalPageCount);
-//		model.addAttribute("pageNum", pageNum);
-//		model.addAttribute("dto", dto); //키워드정보가 들어 있는 dto 를 모델에 담기 
-//		model.addAttribute("totalRow", totalRow);
-		
 		//react frontend 에서 필요한 데이터를 Map 에 담는다 
 		Map<String, Object> map = Map.of("list", list, 
 				"startPageNum", startPageNum,
 				"endPageNum", endPageNum,
 				"totalPageCount", totalPageCount,
-				"pageNum", pageNum);
+				"pageNum", pageNum,
+				"totalRow", totalRow); //몇개가 검색되었는지 갯수 
 		
 		return map;
 		

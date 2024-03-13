@@ -28,15 +28,14 @@ public class CafeController {
 	}
 	
 	@GetMapping("/cafes")
-	public Map<String, Object> list(@RequestParam int pageNum){
+	public Map<String, Object> list(CafeDto dto){
 		
-		return service.getList(pageNum);
+		return service.getList(dto);
 	}
 	
 	@GetMapping("/cafes/{num}") 
-	public CafeDto detail(@PathVariable("num") int num){
-		//아직 검색 키워드 기능이 없으므로 임시로 CafeDto 객체를 생성해서 글번호만 담는다 
-		CafeDto dto=new CafeDto();
+	public CafeDto detail(@PathVariable("num") int num, CafeDto dto){
+		//CafeDto 에 경로 변수 num 값을 담는다 ( 검색조건과 키워드도 담겨 있을수 있다)
 		dto.setNum(num);
 		
 		return service.getDetail(dto);
