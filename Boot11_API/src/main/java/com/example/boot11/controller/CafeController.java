@@ -1,9 +1,13 @@
 package com.example.boot11.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,11 +46,29 @@ public class CafeController {
 	}
 	//댓글 추가 요청 처리 
 	@PostMapping("/cafes/comments")
-	public Map<String, Object> commentInsert(CafeCommentDto dto){
+	public List<CafeCommentDto> commentInsert(CafeCommentDto dto){
 		// FormData 를 클라이언트에서 전송했기때문에 @ResponseBody 어노테이션을 필요 없다 
 		service.saveComment(dto);
+		dto.setPageNum(1);
+		//새로운 댓글 1페이지의 내용을 응답한다
+		return service.getCommentList(dto);
+	}
+	
+	//댓글 삭제 요청 처리
+	@DeleteMapping("/cafes/comments/{num}")
+	public Map<String, Object> commentDelete(@PathVariable("num") int num){
+		//댓글 번호를 이용해서 삭제하기
+		service.deleteComment(num);
 		
 		return Map.of("isSuccess", true);
+	}
+	
+	@PatchMapping("/cafes/comments/{num}")
+	public CafeCommentDto commentUpdate(CafeCommentDto dto){
+		//수정할 글번호는 dto 에 담겨 있기 때문에 경로변수 num 은 활용하지 않아도 된다.
+		service.updateComment(dto);
+		//수정한 글정보를 응답
+		return dto;
 	}
 		
 }

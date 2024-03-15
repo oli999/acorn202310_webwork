@@ -159,6 +159,52 @@ public class CafeServiceImpl implements CafeService{
 		
 	}
 
+	@Override
+	public List<CafeCommentDto> getCommentList(CafeCommentDto dto) {
+		//요청된 댓글의 페이지 번호
+		int pageNum=dto.getPageNum();
+		/*
+			[ 댓글 페이징 처리에 관련된 로직 ]
+		*/
+		//한 페이지에 댓글을 몇개씩 표시할 것인지
+		final int PAGE_ROW_COUNT=10;
+	
+		//보여줄 페이지의 시작 ROWNUM
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지의 끝 ROWNUM
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		//계산된 값을 dto 에 담는다
+		dto.setStartRowNum(startRowNum);
+		dto.setEndRowNum(endRowNum);
+		
+		//pageNum에 해당하는 댓글 목록만 select 되도록 한다. 
+		List<CafeCommentDto> commentList=commentDao.getList(dto);
+		
+		return commentList;
+	}
+
+	@Override
+	public void deleteComment(int num) {
+		//로그인된 사용자와 댓글 작성자가 같은지 확인
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		String writer=commentDao.getData(num).getWriter();
+		if(!userName.equals(writer)) {
+			//예외를 발생시켜서 삭제가 되지 안도록 한다. 
+			
+		}
+		//삭제 작업을 한다.
+		commentDao.delete(num);
+	}
+
+	@Override
+	public void updateComment(CafeCommentDto dto) {
+		//로그인된 사용자와 댓글 작성자가 같은지 확인
+		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+		String writer=commentDao.getData(dto.getNum()).getWriter();
+		//수정
+		commentDao.update(dto);
+	}
+
 }
 
 
