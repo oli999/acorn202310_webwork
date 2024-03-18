@@ -18,7 +18,7 @@ public interface CafeService {
 	public void updateContent(CafeDto dto);
 	public void saveComment(CafeCommentDto dto); //댓글 추가하는 기능
 	//dto 에 담긴 페이지 번호에 해당하는 댓글 목록을 리턴해주는 메소드 
-	public List<CafeCommentDto> getCommentList(CafeCommentDto dto);
+	public Map<String, Object> getCommentList(CafeCommentDto dto);
 	public void deleteComment(int num);
 	public void updateComment(CafeCommentDto dto);
 }

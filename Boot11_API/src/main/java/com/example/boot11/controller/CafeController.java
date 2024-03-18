@@ -46,7 +46,7 @@ public class CafeController {
 	}
 	//댓글 추가 요청 처리 
 	@PostMapping("/cafes/comments")
-	public List<CafeCommentDto> commentInsert(CafeCommentDto dto){
+	public Map<String, Object> commentInsert(CafeCommentDto dto){
 		// FormData 를 클라이언트에서 전송했기때문에 @ResponseBody 어노테이션을 필요 없다 
 		service.saveComment(dto);
 		dto.setPageNum(1);
@@ -69,6 +69,21 @@ public class CafeController {
 		service.updateComment(dto);
 		//수정한 글정보를 응답
 		return dto;
+	}
+	
+	@GetMapping("/cafes/comments")
+	public Map<String, Object> commentList(CafeCommentDto dto){
+		//dto 에는 응답해야할 댓글의 페이지(pageNum) 번호와 원글의 글번호(ref_group) 가 전달된다.
+		
+		//로딩 애니메이션 연습을 위해서 약간의 시간 지연 시키기 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return service.getCommentList(dto);
 	}
 		
 }
