@@ -142,7 +142,7 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public void saveComment(CafeCommentDto dto) {
+	public CafeCommentDto saveComment(CafeCommentDto dto) {
 		//댓글 작성자는 SpringSecurity 로 부터 얻어내기
 		String writer=SecurityContextHolder.getContext().getAuthentication().getName();
 		//글번호를 미리 얻어낸다 
@@ -156,6 +156,8 @@ public class CafeServiceImpl implements CafeService{
 		}
 		//DB 에 저장하기 
 		commentDao.insert(dto);
+		//지금 저장한 댓글 정보를 리턴해준다.
+		return commentDao.getData(num);
 		
 	}
 

@@ -46,12 +46,11 @@ public class CafeController {
 	}
 	//댓글 추가 요청 처리 
 	@PostMapping("/cafes/comments")
-	public Map<String, Object> commentInsert(CafeCommentDto dto){
+	public CafeCommentDto commentInsert(CafeCommentDto dto){
 		// FormData 를 클라이언트에서 전송했기때문에 @ResponseBody 어노테이션을 필요 없다 
-		service.saveComment(dto);
-		dto.setPageNum(1);
-		//새로운 댓글 1페이지의 내용을 응답한다
-		return service.getCommentList(dto);
+		
+		//새로운 댓글을 DB 에 저장하고 추가된 댓글 정보를 응답한다  
+		return service.saveComment(dto);
 	}
 	
 	//댓글 삭제 요청 처리
