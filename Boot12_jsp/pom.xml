@@ -54,13 +54,12 @@
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- jsp 페이지 사용과 taglib 를 사용하기 위해 -->
+		<!-- spring boot 3.0 이상에서 jsp 페이지 사용과 taglib 를 사용하기 위해 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
 		<dependency>
 		    <groupId>jakarta.servlet</groupId>
 		    <artifactId>jakarta.servlet-api</artifactId>    
@@ -69,13 +68,6 @@
 		<dependency>
 		    <groupId>jakarta.servlet.jsp.jstl</groupId>
 		    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api -->
-		<dependency>
-		    <groupId>jakarta.servlet.jsp</groupId>
-		    <artifactId>jakarta.servlet.jsp-api</artifactId>
-		    <version>3.1.1</version>
-		    <scope>provided</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.glassfish.web</groupId>
