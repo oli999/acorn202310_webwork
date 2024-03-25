@@ -22,6 +22,7 @@ public class MemberDto {
 	
 	// entity 를 dto 로 변환하는 static 메소드
 	public static MemberDto toDto(Member entity) {
+		
 		return MemberDto.builder()
 				.num(entity.getNum())
 				.name(entity.getName())

@@ -34,12 +34,23 @@ public class MemberServiceImpl implements MemberService{
 		*/
 		
 		// List<Member> 를 Stream 으로 변경해서 map() 메소드를 사용하고 다시 List<MemberDto> 로 변경하기 
-		List<MemberDto> list=repo.findAllByOrderByNumDesc().stream().map(item -> {
-			return MemberDto.toDto(item);
-		}).toList();
-		
+		List<MemberDto> list=
+				repo.findAllByOrderByNumDesc().stream().map(item -> MemberDto.toDto(item)).toList();
+		/*
+		 *    - 메소드 참조 표현식
+		 *    
+		 *    클래스명 :: 메소드명 
+		 */
+		//List<MemberDto> list2=
+		//		repo.findAllByOrderByNumDesc().stream().map(MemberDto::toDto).toList();
 		//회원목록을 모델에 담는다.
 		model.addAttribute("list", list);
+	}
+
+	@Override
+	public void insert(MemberDto dto) {
+		//Dto 를 Entity 로 변경해서 JpaRepository 객체를 이용해서 저장한다
+		repo.save(Member.toEntity(dto));
 	}
 
 }
