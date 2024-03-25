@@ -17,7 +17,8 @@ public class MemberController {
 	
 	@PostMapping("/member/update")
 	public String update(MemberDto dto) {
-		service.update(dto);
+		//service.update(dto);
+		service.update2(dto);
 		return "member/update";
 	}
 	
