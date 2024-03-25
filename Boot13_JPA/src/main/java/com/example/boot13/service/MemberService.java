@@ -9,4 +9,5 @@ public interface MemberService {
 	public void insert(MemberDto dto);
 	public void delete(Long num);
 	public void getData(Long num, Model model);
+	public void update(MemberDto dto);
 }

@@ -66,6 +66,12 @@ public class MemberServiceImpl implements MemberService{
 		model.addAttribute("dto", MemberDto.toDto(m));
 	}
 
+	@Override
+	public void update(MemberDto dto) {
+		// save() 메소드는 insert 와 update 겸용이다 
+		repo.save(Member.toEntity(dto));
+	}
+
 }
 
 

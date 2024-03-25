@@ -15,6 +15,12 @@ public class MemberController {
 	@Autowired 
 	private MemberService service;
 	
+	@PostMapping("/member/update")
+	public String update(MemberDto dto) {
+		service.update(dto);
+		return "member/update";
+	}
+	
 	@GetMapping("/member/updateform")
 	public String updateform(Long num, Model model) {
 		service.getData(num, model);
