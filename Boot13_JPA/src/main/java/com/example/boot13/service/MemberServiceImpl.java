@@ -53,6 +53,19 @@ public class MemberServiceImpl implements MemberService{
 		repo.save(Member.toEntity(dto));
 	}
 
+	@Override
+	public void delete(Long num) {
+		repo.deleteById(num);
+	}
+
+	@Override
+	public void getData(Long num, Model model) {
+		//회원의 번호를 이용해서 Member Entity 객체를 얻어온다.
+		Member m=repo.findById(num).get();
+		//Model 에 담는다
+		model.addAttribute("dto", MemberDto.toDto(m));
+	}
+
 }
 
 

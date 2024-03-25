@@ -15,6 +15,18 @@ public class MemberController {
 	@Autowired 
 	private MemberService service;
 	
+	@GetMapping("/member/updateform")
+	public String updateform(Long num, Model model) {
+		service.getData(num, model);
+		return "member/updateform";
+	}
+	
+	@GetMapping("/member/delete")
+	public String delete(Long num) {
+		service.delete(num);
+		return "redirect:/member/list";
+	}
+	
 	@PostMapping("/member/insert")
 	public String insert(MemberDto dto) {
 		//MemberService 를 이용해서 회원 정보 추가 
