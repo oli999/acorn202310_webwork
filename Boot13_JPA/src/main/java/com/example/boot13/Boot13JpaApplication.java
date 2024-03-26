@@ -1,15 +1,15 @@
 package com.example.boot13;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.boot13.entity.Dept;
 import com.example.boot13.entity.Emp;
-import com.example.boot13.entity.Member;
+import com.example.boot13.repository.DeptRepository;
 import com.example.boot13.repository.EmpRepository;
 import com.example.boot13.repository.MemberRepository;
 
@@ -17,7 +17,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
 
 /*
  
@@ -70,7 +69,8 @@ public class Boot13JpaApplication {
 	private MemberRepository repo;
 	@Autowired 
 	private EmpRepository empRepo;
-	
+	@Autowired
+	private DeptRepository deptRepo;
 	// JPA EntityManagerFactory 객체 주입 받기 
 	@Autowired
 	EntityManagerFactory emf;
@@ -123,8 +123,30 @@ public class Boot13JpaApplication {
 		}
 		
 		// 사원번호 7900 의 정보 얻어오기 
-		Emp e1=empRepo.findById(7900).get();
-		System.out.println(e1.getEname()+" 사원의 부서 명은 "+e1.getDept().getDname());
+		//Emp e1=empRepo.findById(7900).get();
+		//System.out.println(e1.getEname()+" 사원의 부서 명은 "+e1.getDept().getDname());
+		
+		// 8000 번 사원 정보 하나 추가하기
+		// 사원의 이름 : "KIMGURA", 부서번호 : 40
+		
+		//40 번부서의 Dept ?
+		//Dept d=deptRepo.findById(40).get();
+		
+		//40 번 부서의 다른 정보를 이용해서 회원정보를 저장할것이 아니면 find 없이 부서번호만 Dept 객체에 넣는다 
+		Dept d=Dept.builder().deptno(40).build();
+		
+		
+		//50 번 부서(존재하지않는부서) 에 속한 사원을 추가하려면 foreign key 제약조건이 off 되어 있어야 한다 
+		//Dept d=Dept.builder().deptno(50).build();
+		
+		//Emp 객체를 하나 구성해서 
+		Emp e2=Emp.builder()
+				.empno(8000)
+				.ename("KIMGURA")
+				.dept(d)
+				.build();
+		//저장하기
+		empRepo.save(e2);
 	}
 
 	// run as spring boot app 를 실행하면 여기부터 시작이 된다.
