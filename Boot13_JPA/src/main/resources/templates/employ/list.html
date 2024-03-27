@@ -21,10 +21,16 @@
 					<td th:text="${tmp.empno}"></td>
 					<td th:text="${tmp.ename}"></td>
 					<td th:text="${tmp.deptno}"></td>
-					<td>[[${tmp.dname}]]</td>
+					<td>
+						<a th:href="@{/employ/dept(deptno=${tmp.deptno})}">[[${tmp.dname}]]</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
 </html>
+
+
+
+

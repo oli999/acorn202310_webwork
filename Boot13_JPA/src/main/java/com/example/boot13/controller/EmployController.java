@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.boot13.dto.DeptDto;
 import com.example.boot13.dto.EmpListDto;
+import com.example.boot13.entity.Dept;
 import com.example.boot13.entity.Emp;
+import com.example.boot13.repository.DeptRepository;
 import com.example.boot13.repository.EmpRepository;
 
 @Controller
@@ -16,6 +19,20 @@ public class EmployController {
 	
 	@Autowired
 	private EmpRepository repo;
+	@Autowired 
+	private DeptRepository deptRepo;
+	
+	@GetMapping("/employ/dept")
+	public String deptDetail(int deptno, Model model) {
+		//deptno 에 해당하는 부서 정보를 얻어와서 
+		Dept d=deptRepo.findById(deptno).get();
+		//DeptDto 로 변경한다음 
+		DeptDto dto=DeptDto.toDto(d);
+		//view page 에서 사용할수 있도록 Model 객체에 담아준다
+		model.addAttribute("dto", dto);
+		return "employ/dept";
+	}
+	
 	
 	@GetMapping("/employ/list")
 	public String list(Model model) {
