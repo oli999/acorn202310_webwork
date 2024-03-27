@@ -37,7 +37,7 @@ public class DeptDto {
 				.deptno(dept.getDeptno())
 				.dname(dept.getDname())
 				.loc(dept.getLoc())
-				.count(dept.getList().size())
+				//.count(dept.getList().size())
 				.names(names)
 				.build();
 	}
