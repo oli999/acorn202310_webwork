@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>templates/employ/list3.html</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1>사원 목록 입니다</h1>
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>사원번호</th>
+					<th>사원이름</th>
+					<th>부서번호</th>
+					<th>직업</th>
+					<th>부서이름</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tmp : ${list}">
+					<td th:text="${tmp.empno}"></td>
+					<td th:text="${tmp.ename}"></td>
+					<td th:text="${tmp.deptno}"></td>
+					<td th:text="${tmp.job}"></td>
+					<td>
+						<a th:href="@{/employ/dept(deptno=${tmp.deptno})}">[[${tmp.dname}]]</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<nav>
+			<ul class="pagination">
+				<li th:if="${startPageNum ne 1}" class="page-item">
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${startPageNum-1})}">Prev</a>
+				</li>
+				<li th:unless="${startPageNum ne 1}" class="page-item disabled">
+					<a class="page-link" href="javascript:">Prev</a>
+				</li>
+				<li th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}" th:class="${i eq pageNum ? 'page-item active' : 'page-item'}">
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${i})}">[[${i}]]</a>
+				</li>
+				<li th:if="${endPageNum lt totalPageCount}" class="page-item">
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${endPageNum+1})}">Next</a>
+				</li>
+				<li th:unless="${endPageNum lt totalPageCount}" class="page-item disabled">
+					<a class="page-link" href="javascript:">Next</a>
+				</li>
+			</ul>
+			
+		</nav>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,8 @@ import com.example.boot13.entity.Dept;
 import com.example.boot13.entity.Emp;
 import com.example.boot13.repository.DeptRepository;
 import com.example.boot13.repository.EmpRepository;
+
+
 
 @Controller
 public class EmployController {
@@ -82,7 +85,14 @@ public class EmployController {
 		final int PAGE_DISPLAY_COUNT=5;
 		
 		//empno 에 대해서 오름차순 정렬하겠다는 정보를 담고 있는 Sort 객체 만들기
-		Sort sort=Sort.by(Sort.Direction.ASC, "empno"); 
+		//Sort sort=Sort.by(Sort.Direction.ASC, "empno"); 
+		
+		// dept.deptno , ename 에 대해서 오름 차순 정렬
+		//Sort sort=Sort.by(Sort.Direction.ASC, "dept.deptno", "ename");
+		
+		// dept.deptno 에 대해 오름차순, ename 에 대해 내림차순 정렬
+		Sort sort=Sort.by(Order.asc("dept.deptno"), Order.desc("ename"));
+		
 		//원하는 페이지정보를 담고 있는 Pageable 객체를 얻어내서 
 		Pageable pagable=PageRequest.of(pageNum-1, PAGE_ROW_COUNT, sort);
 		//JpaRepository 객체에 전달해서 원하는 페이지 정보를 얻어낸다 
@@ -109,6 +119,55 @@ public class EmployController {
 		model.addAttribute("pageNum", pageNum);
 		
 		return "employ/list3";
+	}
+	
+	@GetMapping("/employ/list4")
+	public String list4(Model model, @RequestParam(defaultValue = "1") int pageNum, String keyword) {
+		//검색 키워드가 넘어온다고 가정하자
+		keyword="S";
+		
+		//한페이지에 나타낼 row 의 갯수
+		final int PAGE_ROW_COUNT=5;
+		//하단 페이지 표시 갯수 
+		final int PAGE_DISPLAY_COUNT=5;
+		
+		//empno 에 대해서 오름차순 정렬하겠다는 정보를 담고 있는 Sort 객체 만들기
+		//Sort sort=Sort.by(Sort.Direction.ASC, "empno"); 
+		
+		// dept.deptno , ename 에 대해서 오름 차순 정렬
+		//Sort sort=Sort.by(Sort.Direction.ASC, "dept.deptno", "ename");
+		
+		// dept.deptno 에 대해 오름차순, ename 에 대해 내림차순 정렬
+		Sort sort=Sort.by(Order.asc("dept.deptno"), Order.desc("ename"));
+		
+		//원하는 페이지정보를 담고 있는 Pageable 객체를 얻어내서 
+		Pageable pagable=PageRequest.of(pageNum-1, PAGE_ROW_COUNT, sort);
+		//JpaRepository 객체에 전달해서 원하는 페이지 정보를 얻어낸다 
+		//Page<Emp> page=repo.findByEnameContaining(keyword, pagable);
+		Page<Emp> page=repo.findByEnameContainingOrJobContaining(keyword, keyword, pagable);
+		
+		// Emp 목록을 EmpListDto 목록으로 변환 
+		List<EmpListDto> list= page.stream().map(EmpListDto::toDto).toList();
+		
+		//하단 시작 페이지 번호 
+		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+		//하단 끝 페이지 번호
+		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		//전체 페이지의 갯수 구하기
+		int totalPageCount=page.getTotalPages();
+		//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
+		if(endPageNum > totalPageCount){
+			endPageNum=totalPageCount; //보정해 준다. 
+		}
+		
+		//pageNum 에 해당하는 사원 목록을 Model 에 담는다 
+		model.addAttribute("list", list);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "employ/list4";
 	}
 }
 
