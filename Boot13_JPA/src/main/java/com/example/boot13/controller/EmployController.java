@@ -76,14 +76,38 @@ public class EmployController {
 	
 	@GetMapping("/employ/list3")
 	public String list(Model model, @RequestParam(defaultValue = "1") int pageNum) {
-		
+		//한페이지에 나타낼 row 의 갯수
 		final int PAGE_ROW_COUNT=5;
+		//하단 페이지 표시 갯수 
+		final int PAGE_DISPLAY_COUNT=5;
+		
+		//empno 에 대해서 오름차순 정렬하겠다는 정보를 담고 있는 Sort 객체 만들기
 		Sort sort=Sort.by(Sort.Direction.ASC, "empno"); 
+		//원하는 페이지정보를 담고 있는 Pageable 객체를 얻어내서 
 		Pageable pagable=PageRequest.of(pageNum-1, PAGE_ROW_COUNT, sort);
+		//JpaRepository 객체에 전달해서 원하는 페이지 정보를 얻어낸다 
 		Page<Emp> page=repo.findAll(pagable);
+		// Emp 목록을 EmpListDto 목록으로 변환 
 		List<EmpListDto> list= page.stream().map(EmpListDto::toDto).toList();
+		
+		//하단 시작 페이지 번호 
+		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+		//하단 끝 페이지 번호
+		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		//전체 페이지의 갯수 구하기
+		int totalPageCount=page.getTotalPages();
+		//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
+		if(endPageNum > totalPageCount){
+			endPageNum=totalPageCount; //보정해 준다. 
+		}
+		
 		//pageNum 에 해당하는 사원 목록을 Model 에 담는다 
 		model.addAttribute("list", list);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("pageNum", pageNum);
+		
 		return "employ/list3";
 	}
 }

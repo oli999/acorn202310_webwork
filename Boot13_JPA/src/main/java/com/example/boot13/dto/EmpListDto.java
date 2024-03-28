@@ -20,6 +20,7 @@ public class EmpListDto {
 	private String ename;
 	private Integer deptno;
 	private String dname;
+	private String job;
 	
 	public static EmpListDto toDto(Emp emp) {
 		
@@ -28,6 +29,7 @@ public class EmpListDto {
 			.ename(emp.getEname())
 			.deptno(emp.getDept().getDeptno())
 			.dname(emp.getDept().getDname())
+			.job(emp.getJob())
 			.build();
 			
 	}
