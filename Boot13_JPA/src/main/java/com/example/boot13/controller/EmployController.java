@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,6 +24,12 @@ import com.example.boot13.entity.Emp;
 import com.example.boot13.repository.DeptRepository;
 import com.example.boot13.repository.EmpRepository;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
 
 
 @Controller
@@ -32,6 +39,38 @@ public class EmployController {
 	private EmpRepository repo;
 	@Autowired 
 	private DeptRepository deptRepo;
+	
+	@Autowired
+	private EntityManagerFactory factory;
+	
+	@GetMapping("/jpql")
+	public String jpql() {
+		
+		return "jpql";
+	}
+	
+	@ResponseBody
+	@PostMapping("/jpql/test")
+	public List<EmpListDto> test(String query) {
+		EntityManager em=factory.createEntityManager();
+		EntityTransaction tx=em.getTransaction();
+		tx.begin();
+		List<EmpListDto> list=null;
+		try {
+			//전달된 query(jpql) 문을 전달해서 query 를 실행할 준비를 한다. 
+			TypedQuery<Emp> tQuery=em.createQuery(query, Emp.class);
+			//실제 실행해서 stream 으로 얻어낸다음 List<EmpListDto> 로 변환한다.
+			list=tQuery.getResultStream().map(EmpListDto::toDto).toList();
+			tx.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally {
+			em.close();
+		}
+		//결과 리턴하기 
+		return list;
+	}
 	
 	@GetMapping("/employ/dept")
 	public String deptDetail(int deptno, Model model) {
@@ -49,7 +88,12 @@ public class EmployController {
 	public String list(Model model) {
 		//모든 사원의 목록을 얻어온다.
 		//List<Emp> list=repo.findAll();
-		List<Emp> list=repo.findAllByOrderByEmpnoAsc();
+		//List<Emp> list=repo.findAllByOrderByEmpnoAsc();
+		
+		//JPQL 을 사용하는 메소드 이용해 보기
+		//List<Emp> list=repo.getListAll();
+		List<Emp> list=repo.getList(3000);
+		
 		// .stream() 을 이용해서 Entity 목록을 Dto 목록으로 변경한다.
 		List<EmpListDto> list2=list.stream().map(EmpListDto::toDto).toList(); 
 		// view page 에 전달 할수 있도록 Model 객체에 담는다.
